@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "student-performance-api",
+		"name": "Student Performance Prediction API",
+		"description": "API endpoints for the Student Performance Prediction System.\n\nThis API predicts student performance (High / Medium / Low) from engagement metrics and demographic data.\n\nBuilt as part of the SkillOrbit ML Capstone project.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": ["{{base_url}}"],
+					"path": ["health"]
+				},
+				"description": "Check if the service is running and the model is loaded."
+			}
+		},
+		{
+			"name": "Predict Student Performance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"raisedhands\": 50,\n  \"VisITedResources\": 60,\n  \"AnnouncementsView\": 40,\n  \"Discussion\": 30,\n  \"gender\": \"M\",\n  \"NationalITy\": \"KW\",\n  \"PlaceofBirth\": \"Kuwait\",\n  \"StageID\": \"MiddleSchool\",\n  \"GradeID\": \"G-08\",\n  \"SectionID\": \"A\",\n  \"Topic\": \"Math\",\n  \"Semester\": \"F\",\n  \"Relation\": \"Father\",\n  \"ParentAnsweringSurvey\": \"Yes\",\n  \"ParentschoolSatisfaction\": \"Good\",\n  \"StudentAbsenceDays\": \"Under-7\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/predict",
+					"host": ["{{base_url}}"],
+					"path": ["predict"]
+				},
+				"description": "Predict the performance band for a single student.\n\nReturns: predicted class (L/M/H), confidence, full probability distribution, and top SHAP factors."
+			}
+		},
+		{
+			"name": "Predict - Low Engagement Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"raisedhands\": 10,\n  \"VisITedResources\": 5,\n  \"AnnouncementsView\": 8,\n  \"Discussion\": 3,\n  \"gender\": \"F\",\n  \"NationalITy\": \"Jordan\",\n  \"PlaceofBirth\": \"Jordan\",\n  \"StageID\": \"MiddleSchool\",\n  \"GradeID\": \"G-07\",\n  \"SectionID\": \"B\",\n  \"Topic\": \"Science\",\n  \"Semester\": \"S\",\n  \"Relation\": \"Mum\",\n  \"ParentAnsweringSurvey\": \"No\",\n  \"ParentschoolSatisfaction\": \"Bad\",\n  \"StudentAbsenceDays\": \"Above-7\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/predict",
+					"host": ["{{base_url}}"],
+					"path": ["predict"]
+				},
+				"description": "Example: a disengaged student with high absences — likely predicted Low."
+			}
+		},
+		{
+			"name": "Predict - High Engagement Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"raisedhands\": 85,\n  \"VisITedResources\": 90,\n  \"AnnouncementsView\": 70,\n  \"Discussion\": 80,\n  \"gender\": \"M\",\n  \"NationalITy\": \"KW\",\n  \"PlaceofBirth\": \"Kuwait\",\n  \"StageID\": \"MiddleSchool\",\n  \"GradeID\": \"G-08\",\n  \"SectionID\": \"A\",\n  \"Topic\": \"Math\",\n  \"Semester\": \"F\",\n  \"Relation\": \"Father\",\n  \"ParentAnsweringSurvey\": \"Yes\",\n  \"ParentschoolSatisfaction\": \"Good\",\n  \"StudentAbsenceDays\": \"Under-7\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/predict",
+					"host": ["{{base_url}}"],
+					"path": ["predict"]
+				},
+				"description": "Example: a highly engaged student with good attendance — likely predicted High."
+			}
+		},
+		{
+			"name": "OpenAPI Schema",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/openapi.json",
+					"host": ["{{base_url}}"],
+					"path": ["openapi.json"]
+				},
+				"description": "Retrieve the auto-generated OpenAPI schema."
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
