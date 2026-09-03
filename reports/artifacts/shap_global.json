@@ -1,0 +1,530 @@
+{
+  "global": {
+    "n_students_explained": 96,
+    "model_name": "random_forest",
+    "ranked_features": [
+      {
+        "feature": "StudentAbsenceDays",
+        "friendly_name": "Absence level",
+        "mean_abs_shap": 0.14622,
+        "share_of_total": 0.2849,
+        "actionable": true,
+        "sensitive": false
+      },
+      {
+        "feature": "VisITedResources",
+        "friendly_name": "Learning resources opened",
+        "mean_abs_shap": 0.1038,
+        "share_of_total": 0.2022,
+        "actionable": true,
+        "sensitive": false
+      },
+      {
+        "feature": "raisedhands",
+        "friendly_name": "Hands raised in class",
+        "mean_abs_shap": 0.06088,
+        "share_of_total": 0.1186,
+        "actionable": true,
+        "sensitive": false
+      },
+      {
+        "feature": "Relation",
+        "friendly_name": "Responsible parent",
+        "mean_abs_shap": 0.04353,
+        "share_of_total": 0.0848,
+        "actionable": false,
+        "sensitive": false
+      },
+      {
+        "feature": "AnnouncementsView",
+        "friendly_name": "Announcements read",
+        "mean_abs_shap": 0.0403,
+        "share_of_total": 0.0785,
+        "actionable": true,
+        "sensitive": false
+      },
+      {
+        "feature": "ParentAnsweringSurvey",
+        "friendly_name": "Parent answered school survey",
+        "mean_abs_shap": 0.02244,
+        "share_of_total": 0.0437,
+        "actionable": true,
+        "sensitive": false
+      },
+      {
+        "feature": "Discussion",
+        "friendly_name": "Discussion posts",
+        "mean_abs_shap": 0.02129,
+        "share_of_total": 0.0415,
+        "actionable": true,
+        "sensitive": false
+      },
+      {
+        "feature": "Topic",
+        "friendly_name": "Subject",
+        "mean_abs_shap": 0.01402,
+        "share_of_total": 0.0273,
+        "actionable": false,
+        "sensitive": false
+      },
+      {
+        "feature": "gender",
+        "friendly_name": "Gender",
+        "mean_abs_shap": 0.01321,
+        "share_of_total": 0.0257,
+        "actionable": false,
+        "sensitive": true
+      },
+      {
+        "feature": "GradeID",
+        "friendly_name": "Grade",
+        "mean_abs_shap": 0.00967,
+        "share_of_total": 0.0188,
+        "actionable": false,
+        "sensitive": false
+      },
+      {
+        "feature": "ParentschoolSatisfaction",
+        "friendly_name": "Parent satisfaction with school",
+        "mean_abs_shap": 0.00962,
+        "share_of_total": 0.0187,
+        "actionable": false,
+        "sensitive": false
+      },
+      {
+        "feature": "NationalITy",
+        "friendly_name": "Nationality",
+        "mean_abs_shap": 0.00803,
+        "share_of_total": 0.0157,
+        "actionable": false,
+        "sensitive": true
+      },
+      {
+        "feature": "PlaceofBirth",
+        "friendly_name": "Place of birth",
+        "mean_abs_shap": 0.00672,
+        "share_of_total": 0.0131,
+        "actionable": false,
+        "sensitive": false
+      },
+      {
+        "feature": "StageID",
+        "friendly_name": "School stage",
+        "mean_abs_shap": 0.00635,
+        "share_of_total": 0.0124,
+        "actionable": false,
+        "sensitive": false
+      },
+      {
+        "feature": "SectionID",
+        "friendly_name": "Class section",
+        "mean_abs_shap": 0.00398,
+        "share_of_total": 0.0077,
+        "actionable": false,
+        "sensitive": false
+      },
+      {
+        "feature": "Semester",
+        "friendly_name": "Semester",
+        "mean_abs_shap": 0.0032,
+        "share_of_total": 0.0062,
+        "actionable": false,
+        "sensitive": false
+      }
+    ],
+    "top_features": [
+      "StudentAbsenceDays",
+      "VisITedResources",
+      "raisedhands",
+      "Relation",
+      "AnnouncementsView",
+      "ParentAnsweringSurvey",
+      "Discussion",
+      "Topic",
+      "gender",
+      "GradeID"
+    ],
+    "per_class": {
+      "L": [
+        {
+          "feature": "StudentAbsenceDays",
+          "friendly_name": "Absence level",
+          "mean_abs_shap": 0.1834,
+          "mean_signed_shap": 0.00282
+        },
+        {
+          "feature": "VisITedResources",
+          "friendly_name": "Learning resources opened",
+          "mean_abs_shap": 0.12514,
+          "mean_signed_shap": -0.01864
+        },
+        {
+          "feature": "raisedhands",
+          "friendly_name": "Hands raised in class",
+          "mean_abs_shap": 0.06488,
+          "mean_signed_shap": -0.01836
+        },
+        {
+          "feature": "AnnouncementsView",
+          "friendly_name": "Announcements read",
+          "mean_abs_shap": 0.05326,
+          "mean_signed_shap": -0.00888
+        },
+        {
+          "feature": "ParentAnsweringSurvey",
+          "friendly_name": "Parent answered school survey",
+          "mean_abs_shap": 0.0229,
+          "mean_signed_shap": -0.00248
+        },
+        {
+          "feature": "Discussion",
+          "friendly_name": "Discussion posts",
+          "mean_abs_shap": 0.01751,
+          "mean_signed_shap": -0.00387
+        },
+        {
+          "feature": "Relation",
+          "friendly_name": "Responsible parent",
+          "mean_abs_shap": 0.01257,
+          "mean_signed_shap": 0.00363
+        },
+        {
+          "feature": "Topic",
+          "friendly_name": "Subject",
+          "mean_abs_shap": 0.00827,
+          "mean_signed_shap": -0.00165
+        },
+        {
+          "feature": "gender",
+          "friendly_name": "Gender",
+          "mean_abs_shap": 0.00811,
+          "mean_signed_shap": -4e-05
+        },
+        {
+          "feature": "ParentschoolSatisfaction",
+          "friendly_name": "Parent satisfaction with school",
+          "mean_abs_shap": 0.00776,
+          "mean_signed_shap": -0.00174
+        }
+      ],
+      "M": [
+        {
+          "feature": "StudentAbsenceDays",
+          "friendly_name": "Absence level",
+          "mean_abs_shap": 0.0976,
+          "mean_signed_shap": -0.01378
+        },
+        {
+          "feature": "VisITedResources",
+          "friendly_name": "Learning resources opened",
+          "mean_abs_shap": 0.09497,
+          "mean_signed_shap": 0.01204
+        },
+        {
+          "feature": "Relation",
+          "friendly_name": "Responsible parent",
+          "mean_abs_shap": 0.05274,
+          "mean_signed_shap": 0.01047
+        },
+        {
+          "feature": "raisedhands",
+          "friendly_name": "Hands raised in class",
+          "mean_abs_shap": 0.05161,
+          "mean_signed_shap": 0.02123
+        },
+        {
+          "feature": "AnnouncementsView",
+          "friendly_name": "Announcements read",
+          "mean_abs_shap": 0.04073,
+          "mean_signed_shap": 0.01135
+        },
+        {
+          "feature": "Discussion",
+          "friendly_name": "Discussion posts",
+          "mean_abs_shap": 0.02379,
+          "mean_signed_shap": 0.00634
+        },
+        {
+          "feature": "Topic",
+          "friendly_name": "Subject",
+          "mean_abs_shap": 0.01987,
+          "mean_signed_shap": 0.0029
+        },
+        {
+          "feature": "ParentAnsweringSurvey",
+          "friendly_name": "Parent answered school survey",
+          "mean_abs_shap": 0.01903,
+          "mean_signed_shap": 0.00658
+        },
+        {
+          "feature": "gender",
+          "friendly_name": "Gender",
+          "mean_abs_shap": 0.01343,
+          "mean_signed_shap": 0.00298
+        },
+        {
+          "feature": "GradeID",
+          "friendly_name": "Grade",
+          "mean_abs_shap": 0.01322,
+          "mean_signed_shap": 0.0013
+        }
+      ],
+      "H": [
+        {
+          "feature": "StudentAbsenceDays",
+          "friendly_name": "Absence level",
+          "mean_abs_shap": 0.15765,
+          "mean_signed_shap": 0.01096
+        },
+        {
+          "feature": "VisITedResources",
+          "friendly_name": "Learning resources opened",
+          "mean_abs_shap": 0.0913,
+          "mean_signed_shap": 0.0066
+        },
+        {
+          "feature": "raisedhands",
+          "friendly_name": "Hands raised in class",
+          "mean_abs_shap": 0.06614,
+          "mean_signed_shap": -0.00287
+        },
+        {
+          "feature": "Relation",
+          "friendly_name": "Responsible parent",
+          "mean_abs_shap": 0.06529,
+          "mean_signed_shap": -0.0141
+        },
+        {
+          "feature": "AnnouncementsView",
+          "friendly_name": "Announcements read",
+          "mean_abs_shap": 0.02691,
+          "mean_signed_shap": -0.00248
+        },
+        {
+          "feature": "ParentAnsweringSurvey",
+          "friendly_name": "Parent answered school survey",
+          "mean_abs_shap": 0.02539,
+          "mean_signed_shap": -0.0041
+        },
+        {
+          "feature": "Discussion",
+          "friendly_name": "Discussion posts",
+          "mean_abs_shap": 0.02257,
+          "mean_signed_shap": -0.00246
+        },
+        {
+          "feature": "gender",
+          "friendly_name": "Gender",
+          "mean_abs_shap": 0.01808,
+          "mean_signed_shap": -0.00294
+        },
+        {
+          "feature": "Topic",
+          "friendly_name": "Subject",
+          "mean_abs_shap": 0.01394,
+          "mean_signed_shap": -0.00125
+        },
+        {
+          "feature": "ParentschoolSatisfaction",
+          "friendly_name": "Parent satisfaction with school",
+          "mean_abs_shap": 0.01263,
+          "mean_signed_shap": -0.00127
+        }
+      ]
+    },
+    "sensitive_feature_influence": [
+      {
+        "feature": "gender",
+        "friendly_name": "Gender",
+        "mean_abs_shap": 0.01321,
+        "share_of_total": 0.0257,
+        "actionable": false,
+        "sensitive": true
+      },
+      {
+        "feature": "NationalITy",
+        "friendly_name": "Nationality",
+        "mean_abs_shap": 0.00803,
+        "share_of_total": 0.0157,
+        "actionable": false,
+        "sensitive": true
+      }
+    ],
+    "narrative": "The three features the model relies on most are Absence level, Learning resources opened, Hands raised in class, which together account for 61% of its total decision weight. 4 of the top five are things a school can actually change (Absence level, Learning resources opened, Hands raised in class, Announcements read), which is what makes the recommendations that follow worth acting on rather than merely descriptive. The most influential demographic attribute is Gender, ranked 9 of 16 with 2.6% of the decision weight. Influence alone is not proof of unfair treatment, but it is the reason the fairness audit is a required part of this project rather than an optional extra."
+  },
+  "examples": {
+    "at_risk": {
+      "actual_class": "L",
+      "predicted_class": "L",
+      "confidence": 0.8467,
+      "summary": "The model predicts Low performance with 85% confidence. The strongest support for this comes from Absence level (Above-7), Announcements read (2), Discussion posts (16). Working in the other direction, Hands raised in class (70) is the clearest factor pointing away from Low. Of the factors a school can influence, Absence level carries the most weight here \u2014 the counterfactual view shows what changing it would take.",
+      "contributions": [
+        {
+          "feature": "StudentAbsenceDays",
+          "friendly_name": "Absence level",
+          "value": "Above-7",
+          "shap": 0.27711,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Absence level = Above-7 supports the Low prediction (contribution +0.277)."
+        },
+        {
+          "feature": "AnnouncementsView",
+          "friendly_name": "Announcements read",
+          "value": 2,
+          "shap": 0.15312,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Announcements read = 2 supports the Low prediction (contribution +0.153)."
+        },
+        {
+          "feature": "raisedhands",
+          "friendly_name": "Hands raised in class",
+          "value": 70,
+          "shap": -0.08343,
+          "direction": "decreases",
+          "actionable": true,
+          "sentence": "Hands raised in class = 70 argues against the Low prediction (contribution -0.083)."
+        },
+        {
+          "feature": "Discussion",
+          "friendly_name": "Discussion posts",
+          "value": 16,
+          "shap": 0.05982,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Discussion posts = 16 supports the Low prediction (contribution +0.060)."
+        },
+        {
+          "feature": "VisITedResources",
+          "friendly_name": "Learning resources opened",
+          "value": 40,
+          "shap": 0.04603,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Learning resources opened = 40 supports the Low prediction (contribution +0.046)."
+        },
+        {
+          "feature": "GradeID",
+          "friendly_name": "Grade",
+          "value": "G-06",
+          "shap": -0.03914,
+          "direction": "decreases",
+          "actionable": false,
+          "sentence": "Grade = G-06 argues against the Low prediction (contribution -0.039)."
+        },
+        {
+          "feature": "ParentAnsweringSurvey",
+          "friendly_name": "Parent answered school survey",
+          "value": "No",
+          "shap": 0.03857,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Parent answered school survey = No supports the Low prediction (contribution +0.039)."
+        },
+        {
+          "feature": "Relation",
+          "friendly_name": "Responsible parent",
+          "value": "Father",
+          "shap": 0.02444,
+          "direction": "increases",
+          "actionable": false,
+          "sentence": "Responsible parent = Father supports the Low prediction (contribution +0.024)."
+        }
+      ]
+    },
+    "thriving": {
+      "actual_class": "H",
+      "predicted_class": "H",
+      "confidence": 0.7431,
+      "summary": "The model predicts High performance with 74% confidence. The strongest support for this comes from Absence level (Under-7), Learning resources opened (60), Discussion posts (75). Working in the other direction, Responsible parent (Father) is the clearest factor pointing away from High.",
+      "contributions": [
+        {
+          "feature": "StudentAbsenceDays",
+          "friendly_name": "Absence level",
+          "value": "Under-7",
+          "shap": 0.16993,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Absence level = Under-7 supports the High prediction (contribution +0.170)."
+        },
+        {
+          "feature": "Relation",
+          "friendly_name": "Responsible parent",
+          "value": "Father",
+          "shap": -0.07585,
+          "direction": "decreases",
+          "actionable": false,
+          "sentence": "Responsible parent = Father argues against the High prediction (contribution -0.076)."
+        },
+        {
+          "feature": "VisITedResources",
+          "friendly_name": "Learning resources opened",
+          "value": 60,
+          "shap": 0.0711,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Learning resources opened = 60 supports the High prediction (contribution +0.071)."
+        },
+        {
+          "feature": "Discussion",
+          "friendly_name": "Discussion posts",
+          "value": 75,
+          "shap": 0.04604,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Discussion posts = 75 supports the High prediction (contribution +0.046)."
+        },
+        {
+          "feature": "StageID",
+          "friendly_name": "School stage",
+          "value": "lowerlevel",
+          "shap": 0.03814,
+          "direction": "increases",
+          "actionable": false,
+          "sentence": "School stage = lowerlevel supports the High prediction (contribution +0.038)."
+        },
+        {
+          "feature": "ParentAnsweringSurvey",
+          "friendly_name": "Parent answered school survey",
+          "value": "Yes",
+          "shap": 0.03479,
+          "direction": "increases",
+          "actionable": true,
+          "sentence": "Parent answered school survey = Yes supports the High prediction (contribution +0.035)."
+        },
+        {
+          "feature": "GradeID",
+          "friendly_name": "Grade",
+          "value": "G-02",
+          "shap": 0.03361,
+          "direction": "increases",
+          "actionable": false,
+          "sentence": "Grade = G-02 supports the High prediction (contribution +0.034)."
+        },
+        {
+          "feature": "gender",
+          "friendly_name": "Gender",
+          "value": "F",
+          "shap": 0.0276,
+          "direction": "increases",
+          "actionable": false,
+          "sentence": "Gender = F supports the High prediction (contribution +0.028)."
+        }
+      ]
+    }
+  },
+  "figures": {
+    "global": {
+      "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\12_shap_global_importance.png",
+      "filename": "12_shap_global_importance.png",
+      "caption": "Features ranked by how much they move the model's output on average. Blue bars are levers a school can pull; grey bars are attributes it cannot. The ranking is computed across 96 held-out students."
+    },
+    "local_at_risk": {
+      "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\13_shap_local_example.png",
+      "filename": "13_shap_local_example.png",
+      "caption": "Each bar is one factor's contribution for this individual student. Green pushes toward the predicted band, red pushes away. The bars sum to the gap between this student's prediction and the dataset average."
+    }
+  },
+  "method": "TreeExplainer (exact SHAP values) where the final model is tree-based, KernelExplainer (sampled approximation) otherwise. One-hot columns are summed back to their source feature so every number is reported against a name a teacher recognises."
+}

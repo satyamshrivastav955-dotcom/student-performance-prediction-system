@@ -1,0 +1,547 @@
+{
+  "backend": "scipy",
+  "alpha": 0.05,
+  "correction": "holm",
+  "n_students": 478,
+  "class_distribution": {
+    "M": 211,
+    "H": 142,
+    "L": 125
+  },
+  "anova": {
+    "raisedhands": {
+      "friendly_name": "Hands raised in class",
+      "f_statistic": 174.5035,
+      "p_value": 1.5175758915695918e-57,
+      "df_between": 2,
+      "df_within": 475,
+      "eta_squared": 0.4235,
+      "effect_size_label": "large",
+      "group_means": {
+        "L": 16.84,
+        "M": 48.94,
+        "H": 70.29
+      },
+      "group_stds": {
+        "L": 17.3,
+        "M": 26.89,
+        "H": 22.54
+      },
+      "group_sizes": {
+        "L": 125,
+        "M": 211,
+        "H": 142
+      },
+      "levene_w": 34.1782,
+      "levene_p": 1.3554587353206838e-14,
+      "equal_variance_assumption_holds": false,
+      "kruskal_h": 206.2924,
+      "kruskal_p": 1.6002125681052975e-45,
+      "parametric_and_nonparametric_agree": true,
+      "p_value_adjusted": 2.2763638373543876e-56,
+      "significant": true
+    },
+    "VisITedResources": {
+      "friendly_name": "Learning resources opened",
+      "f_statistic": 226.4358,
+      "p_value": 8.637078234126443e-70,
+      "df_between": 2,
+      "df_within": 475,
+      "eta_squared": 0.4881,
+      "effect_size_label": "large",
+      "group_means": {
+        "L": 18.42,
+        "M": 60.64,
+        "H": 78.75
+      },
+      "group_stds": {
+        "L": 19.32,
+        "M": 28.23,
+        "H": 19.36
+      },
+      "group_sizes": {
+        "L": 125,
+        "M": 211,
+        "H": 142
+      },
+      "levene_w": 22.4173,
+      "levene_p": 4.974504421830549e-10,
+      "equal_variance_assumption_holds": false,
+      "kruskal_h": 219.526,
+      "kruskal_p": 2.140634150153143e-48,
+      "parametric_and_nonparametric_agree": true,
+      "p_value_adjusted": 1.3819325174602308e-68,
+      "significant": true
+    },
+    "AnnouncementsView": {
+      "friendly_name": "Announcements read",
+      "f_statistic": 97.2881,
+      "p_value": 3.8657155949142884e-36,
+      "df_between": 2,
+      "df_within": 475,
+      "eta_squared": 0.2906,
+      "effect_size_label": "large",
+      "group_means": {
+        "L": 15.58,
+        "M": 40.96,
+        "H": 53.38
+      },
+      "group_stds": {
+        "L": 15.42,
+        "M": 24.09,
+        "H": 25.06
+      },
+      "group_sizes": {
+        "L": 125,
+        "M": 211,
+        "H": 142
+      },
+      "levene_w": 25.8809,
+      "levene_p": 2.144615126840535e-11,
+      "equal_variance_assumption_holds": false,
+      "kruskal_h": 152.9202,
+      "kruskal_p": 6.22002731594434e-34,
+      "parametric_and_nonparametric_agree": true,
+      "p_value_adjusted": 5.025430273388575e-35,
+      "significant": true
+    },
+    "Discussion": {
+      "friendly_name": "Discussion posts",
+      "f_statistic": 24.346,
+      "p_value": 8.594384059968526e-11,
+      "df_between": 2,
+      "df_within": 475,
+      "eta_squared": 0.093,
+      "effect_size_label": "medium",
+      "group_means": {
+        "L": 31.12,
+        "M": 43.79,
+        "H": 53.66
+      },
+      "group_stds": {
+        "L": 25.8,
+        "M": 26.12,
+        "H": 27.2
+      },
+      "group_sizes": {
+        "L": 125,
+        "M": 211,
+        "H": 142
+      },
+      "levene_w": 2.5523,
+      "levene_p": 0.07897403973660193,
+      "equal_variance_assumption_holds": true,
+      "kruskal_h": 47.857,
+      "kruskal_p": 4.0549597700450725e-11,
+      "parametric_and_nonparametric_agree": true,
+      "p_value_adjusted": 7.734945653971673e-10,
+      "significant": true
+    }
+  },
+  "chi_square": {
+    "gender": {
+      "chi2": 32.4296,
+      "p_value": 9.078110951461649e-08,
+      "dof": 2,
+      "cramers_v": 0.2605,
+      "min_expected": 45.76,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 2,
+      "friendly_name": "Gender",
+      "effect_size_label": "medium",
+      "p_value_adjusted": 7.262488761169319e-07,
+      "significant": true
+    },
+    "NationalITy": {
+      "chi2": 74.9963,
+      "p_value": 1.2102002120867419e-06,
+      "dof": 26,
+      "cramers_v": 0.2801,
+      "min_expected": 0.26,
+      "assumption_ok": false,
+      "n": 478,
+      "n_levels": 14,
+      "friendly_name": "Nationality",
+      "effect_size_label": "medium",
+      "p_value_adjusted": 7.261201272520451e-06,
+      "significant": true
+    },
+    "PlaceofBirth": {
+      "chi2": 76.9994,
+      "p_value": 6.032312725291548e-07,
+      "dof": 26,
+      "cramers_v": 0.2838,
+      "min_expected": 0.26,
+      "assumption_ok": false,
+      "n": 478,
+      "n_levels": 14,
+      "friendly_name": "Place of birth",
+      "effect_size_label": "medium",
+      "p_value_adjusted": 4.2226189077040835e-06,
+      "significant": true
+    },
+    "StageID": {
+      "chi2": 6.2686,
+      "p_value": 0.17996937260567164,
+      "dof": 4,
+      "cramers_v": 0.081,
+      "min_expected": 8.63,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 3,
+      "friendly_name": "School stage",
+      "effect_size_label": "negligible",
+      "p_value_adjusted": 0.3599387452113433,
+      "significant": false
+    },
+    "GradeID": {
+      "chi2": 28.1071,
+      "p_value": 0.060443759229838086,
+      "dof": 18,
+      "cramers_v": 0.1715,
+      "min_expected": 0.78,
+      "assumption_ok": false,
+      "n": 478,
+      "n_levels": 10,
+      "friendly_name": "Grade",
+      "effect_size_label": "small",
+      "p_value_adjusted": 0.18133127768951426,
+      "significant": false
+    },
+    "SectionID": {
+      "chi2": 4.6582,
+      "p_value": 0.3242045232406406,
+      "dof": 4,
+      "cramers_v": 0.0698,
+      "min_expected": 7.85,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 3,
+      "friendly_name": "Class section",
+      "effect_size_label": "negligible",
+      "p_value_adjusted": 0.3599387452113433,
+      "significant": false
+    },
+    "Topic": {
+      "chi2": 45.7238,
+      "p_value": 0.002145749514203939,
+      "dof": 22,
+      "cramers_v": 0.2187,
+      "min_expected": 4.97,
+      "assumption_ok": false,
+      "n": 478,
+      "n_levels": 12,
+      "friendly_name": "Subject",
+      "effect_size_label": "medium",
+      "p_value_adjusted": 0.010728747571019695,
+      "significant": true
+    },
+    "Semester": {
+      "chi2": 7.9127,
+      "p_value": 0.01913294059479174,
+      "dof": 2,
+      "cramers_v": 0.1287,
+      "min_expected": 61.19,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 2,
+      "friendly_name": "Semester",
+      "effect_size_label": "small",
+      "p_value_adjusted": 0.07653176237916696,
+      "significant": false
+    },
+    "Relation": {
+      "chi2": 80.142,
+      "p_value": 3.957197834937713e-18,
+      "dof": 2,
+      "cramers_v": 0.4095,
+      "min_expected": 51.52,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 2,
+      "friendly_name": "Responsible parent",
+      "effect_size_label": "large",
+      "p_value_adjusted": 4.352917618431484e-17,
+      "significant": true
+    },
+    "ParentAnsweringSurvey": {
+      "chi2": 93.2975,
+      "p_value": 5.504470538968544e-21,
+      "dof": 2,
+      "cramers_v": 0.4418,
+      "min_expected": 54.39,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 2,
+      "friendly_name": "Parent answered school survey",
+      "effect_size_label": "large",
+      "p_value_adjusted": 6.605364646762253e-20,
+      "significant": true
+    },
+    "ParentschoolSatisfaction": {
+      "chi2": 66.4835,
+      "p_value": 3.6583953288329044e-15,
+      "dof": 2,
+      "cramers_v": 0.3729,
+      "min_expected": 48.64,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 2,
+      "friendly_name": "Parent satisfaction with school",
+      "effect_size_label": "large",
+      "p_value_adjusted": 3.658395328832905e-14,
+      "significant": true
+    },
+    "StudentAbsenceDays": {
+      "chi2": 222.7136,
+      "p_value": 4.348596053268476e-49,
+      "dof": 2,
+      "cramers_v": 0.6826,
+      "min_expected": 49.42,
+      "assumption_ok": true,
+      "n": 478,
+      "n_levels": 2,
+      "friendly_name": "Absence level",
+      "effect_size_label": "large",
+      "p_value_adjusted": 6.088034474575866e-48,
+      "significant": true
+    }
+  },
+  "n_tests_in_family": 16,
+  "ranked_factors": [
+    {
+      "feature": "StudentAbsenceDays",
+      "friendly_name": "Absence level",
+      "test": "Chi-square",
+      "statistic": 222.7136,
+      "p_value": 4.348596053268476e-49,
+      "p_value_adjusted": 6.088034474575866e-48,
+      "effect_size": 0.6826,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "large",
+      "significant": true
+    },
+    {
+      "feature": "VisITedResources",
+      "friendly_name": "Learning resources opened",
+      "test": "ANOVA",
+      "statistic": 226.4358,
+      "p_value": 8.637078234126443e-70,
+      "p_value_adjusted": 1.3819325174602308e-68,
+      "effect_size": 0.4881,
+      "effect_size_metric": "eta_squared",
+      "effect_size_label": "large",
+      "significant": true
+    },
+    {
+      "feature": "ParentAnsweringSurvey",
+      "friendly_name": "Parent answered school survey",
+      "test": "Chi-square",
+      "statistic": 93.2975,
+      "p_value": 5.504470538968544e-21,
+      "p_value_adjusted": 6.605364646762253e-20,
+      "effect_size": 0.4418,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "large",
+      "significant": true
+    },
+    {
+      "feature": "raisedhands",
+      "friendly_name": "Hands raised in class",
+      "test": "ANOVA",
+      "statistic": 174.5035,
+      "p_value": 1.5175758915695918e-57,
+      "p_value_adjusted": 2.2763638373543876e-56,
+      "effect_size": 0.4235,
+      "effect_size_metric": "eta_squared",
+      "effect_size_label": "large",
+      "significant": true
+    },
+    {
+      "feature": "Relation",
+      "friendly_name": "Responsible parent",
+      "test": "Chi-square",
+      "statistic": 80.142,
+      "p_value": 3.957197834937713e-18,
+      "p_value_adjusted": 4.352917618431484e-17,
+      "effect_size": 0.4095,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "large",
+      "significant": true
+    },
+    {
+      "feature": "ParentschoolSatisfaction",
+      "friendly_name": "Parent satisfaction with school",
+      "test": "Chi-square",
+      "statistic": 66.4835,
+      "p_value": 3.6583953288329044e-15,
+      "p_value_adjusted": 3.658395328832905e-14,
+      "effect_size": 0.3729,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "large",
+      "significant": true
+    },
+    {
+      "feature": "AnnouncementsView",
+      "friendly_name": "Announcements read",
+      "test": "ANOVA",
+      "statistic": 97.2881,
+      "p_value": 3.8657155949142884e-36,
+      "p_value_adjusted": 5.025430273388575e-35,
+      "effect_size": 0.2906,
+      "effect_size_metric": "eta_squared",
+      "effect_size_label": "large",
+      "significant": true
+    },
+    {
+      "feature": "PlaceofBirth",
+      "friendly_name": "Place of birth",
+      "test": "Chi-square",
+      "statistic": 76.9994,
+      "p_value": 6.032312725291548e-07,
+      "p_value_adjusted": 4.2226189077040835e-06,
+      "effect_size": 0.2838,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "medium",
+      "significant": true
+    },
+    {
+      "feature": "NationalITy",
+      "friendly_name": "Nationality",
+      "test": "Chi-square",
+      "statistic": 74.9963,
+      "p_value": 1.2102002120867419e-06,
+      "p_value_adjusted": 7.261201272520451e-06,
+      "effect_size": 0.2801,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "medium",
+      "significant": true
+    },
+    {
+      "feature": "gender",
+      "friendly_name": "Gender",
+      "test": "Chi-square",
+      "statistic": 32.4296,
+      "p_value": 9.078110951461649e-08,
+      "p_value_adjusted": 7.262488761169319e-07,
+      "effect_size": 0.2605,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "medium",
+      "significant": true
+    },
+    {
+      "feature": "Topic",
+      "friendly_name": "Subject",
+      "test": "Chi-square",
+      "statistic": 45.7238,
+      "p_value": 0.002145749514203939,
+      "p_value_adjusted": 0.010728747571019695,
+      "effect_size": 0.2187,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "medium",
+      "significant": true
+    },
+    {
+      "feature": "GradeID",
+      "friendly_name": "Grade",
+      "test": "Chi-square",
+      "statistic": 28.1071,
+      "p_value": 0.060443759229838086,
+      "p_value_adjusted": 0.18133127768951426,
+      "effect_size": 0.1715,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "small",
+      "significant": false
+    },
+    {
+      "feature": "Semester",
+      "friendly_name": "Semester",
+      "test": "Chi-square",
+      "statistic": 7.9127,
+      "p_value": 0.01913294059479174,
+      "p_value_adjusted": 0.07653176237916696,
+      "effect_size": 0.1287,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "small",
+      "significant": false
+    },
+    {
+      "feature": "Discussion",
+      "friendly_name": "Discussion posts",
+      "test": "ANOVA",
+      "statistic": 24.346,
+      "p_value": 8.594384059968526e-11,
+      "p_value_adjusted": 7.734945653971673e-10,
+      "effect_size": 0.093,
+      "effect_size_metric": "eta_squared",
+      "effect_size_label": "medium",
+      "significant": true
+    },
+    {
+      "feature": "StageID",
+      "friendly_name": "School stage",
+      "test": "Chi-square",
+      "statistic": 6.2686,
+      "p_value": 0.17996937260567164,
+      "p_value_adjusted": 0.3599387452113433,
+      "effect_size": 0.081,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "negligible",
+      "significant": false
+    },
+    {
+      "feature": "SectionID",
+      "friendly_name": "Class section",
+      "test": "Chi-square",
+      "statistic": 4.6582,
+      "p_value": 0.3242045232406406,
+      "p_value_adjusted": 0.3599387452113433,
+      "effect_size": 0.0698,
+      "effect_size_metric": "cramers_v",
+      "effect_size_label": "negligible",
+      "significant": false
+    }
+  ],
+  "significant_factors": [
+    "StudentAbsenceDays",
+    "VisITedResources",
+    "ParentAnsweringSurvey",
+    "raisedhands",
+    "Relation",
+    "ParentschoolSatisfaction",
+    "AnnouncementsView",
+    "PlaceofBirth",
+    "NationalITy",
+    "gender",
+    "Topic",
+    "Discussion"
+  ],
+  "n_significant": 12,
+  "spearman_correlation": {
+    "raisedhands": {
+      "raisedhands": 1.0,
+      "VisITedResources": 0.661,
+      "AnnouncementsView": 0.651,
+      "Discussion": 0.336
+    },
+    "VisITedResources": {
+      "raisedhands": 0.661,
+      "VisITedResources": 1.0,
+      "AnnouncementsView": 0.57,
+      "Discussion": 0.202
+    },
+    "AnnouncementsView": {
+      "raisedhands": 0.651,
+      "VisITedResources": 0.57,
+      "AnnouncementsView": 1.0,
+      "Discussion": 0.401
+    },
+    "Discussion": {
+      "raisedhands": 0.336,
+      "VisITedResources": 0.202,
+      "AnnouncementsView": 0.401,
+      "Discussion": 1.0
+    }
+  }
+}

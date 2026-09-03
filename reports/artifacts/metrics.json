@@ -1,0 +1,1166 @@
+{
+  "config": {
+    "random_seed": 42,
+    "test_size": 0.2,
+    "cv_folds": 5,
+    "cv_scoring": "f1_macro",
+    "class_order": [
+      "L",
+      "M",
+      "H"
+    ],
+    "n_features_raw": 16,
+    "xgboost_available": false
+  },
+  "dataset": {
+    "n_total": 478,
+    "n_train": 382,
+    "n_test": 96,
+    "train_class_counts": {
+      "L": 100,
+      "M": 169,
+      "H": 113
+    },
+    "test_class_counts": {
+      "L": 25,
+      "M": 42,
+      "H": 29
+    }
+  },
+  "cross_validation": {
+    "logistic_regression": {
+      "fit_seconds": 0.67,
+      "n_splits": 5,
+      "accuracy": {
+        "mean": 0.7436,
+        "std": 0.0479,
+        "folds": [
+          0.6883,
+          0.7403,
+          0.7105,
+          0.8289,
+          0.75
+        ],
+        "train_mean": 0.8442,
+        "overfit_gap": 0.1006
+      },
+      "f1_macro": {
+        "mean": 0.7511,
+        "std": 0.0476,
+        "folds": [
+          0.698,
+          0.7442,
+          0.7178,
+          0.8363,
+          0.7592
+        ],
+        "train_mean": 0.8497,
+        "overfit_gap": 0.0986
+      },
+      "precision_macro": {
+        "mean": 0.75,
+        "std": 0.0561,
+        "folds": [
+          0.6936,
+          0.741,
+          0.708,
+          0.8533,
+          0.7543
+        ],
+        "train_mean": 0.8431,
+        "overfit_gap": 0.0931
+      },
+      "recall_macro": {
+        "mean": 0.7636,
+        "std": 0.0355,
+        "folds": [
+          0.7254,
+          0.7555,
+          0.7415,
+          0.8291,
+          0.7664
+        ],
+        "train_mean": 0.8627,
+        "overfit_gap": 0.0992
+      },
+      "roc_auc_ovr": {
+        "mean": 0.8857,
+        "std": 0.0304,
+        "folds": [
+          0.8825,
+          0.8735,
+          0.8643,
+          0.9448,
+          0.8634
+        ],
+        "train_mean": 0.9531,
+        "overfit_gap": 0.0674
+      }
+    },
+    "decision_tree": {
+      "fit_seconds": 0.53,
+      "n_splits": 5,
+      "accuracy": {
+        "mean": 0.6728,
+        "std": 0.0556,
+        "folds": [
+          0.6883,
+          0.6494,
+          0.5921,
+          0.7632,
+          0.6711
+        ],
+        "train_mean": 0.8449,
+        "overfit_gap": 0.1721
+      },
+      "f1_macro": {
+        "mean": 0.6818,
+        "std": 0.0535,
+        "folds": [
+          0.7033,
+          0.652,
+          0.6029,
+          0.7636,
+          0.687
+        ],
+        "train_mean": 0.8499,
+        "overfit_gap": 0.1682
+      },
+      "precision_macro": {
+        "mean": 0.6812,
+        "std": 0.0577,
+        "folds": [
+          0.7046,
+          0.6538,
+          0.5919,
+          0.7667,
+          0.689
+        ],
+        "train_mean": 0.8462,
+        "overfit_gap": 0.1651
+      },
+      "recall_macro": {
+        "mean": 0.692,
+        "std": 0.0478,
+        "folds": [
+          0.7044,
+          0.6584,
+          0.6357,
+          0.7754,
+          0.6861
+        ],
+        "train_mean": 0.8578,
+        "overfit_gap": 0.1658
+      },
+      "roc_auc_ovr": {
+        "mean": 0.8109,
+        "std": 0.0553,
+        "folds": [
+          0.8233,
+          0.7633,
+          0.7746,
+          0.9138,
+          0.7794
+        ],
+        "train_mean": 0.9578,
+        "overfit_gap": 0.1469
+      }
+    },
+    "random_forest": {
+      "fit_seconds": 9.26,
+      "n_splits": 5,
+      "accuracy": {
+        "mean": 0.7489,
+        "std": 0.0812,
+        "folds": [
+          0.6623,
+          0.7532,
+          0.75,
+          0.8947,
+          0.6842
+        ],
+        "train_mean": 0.9653,
+        "overfit_gap": 0.2164
+      },
+      "f1_macro": {
+        "mean": 0.7579,
+        "std": 0.0782,
+        "folds": [
+          0.6782,
+          0.76,
+          0.7513,
+          0.9014,
+          0.6984
+        ],
+        "train_mean": 0.9662,
+        "overfit_gap": 0.2084
+      },
+      "precision_macro": {
+        "mean": 0.7548,
+        "std": 0.0796,
+        "folds": [
+          0.6764,
+          0.756,
+          0.7461,
+          0.9021,
+          0.6934
+        ],
+        "train_mean": 0.9624,
+        "overfit_gap": 0.2076
+      },
+      "recall_macro": {
+        "mean": 0.767,
+        "std": 0.0753,
+        "folds": [
+          0.6895,
+          0.765,
+          0.7694,
+          0.904,
+          0.7071
+        ],
+        "train_mean": 0.9711,
+        "overfit_gap": 0.2041
+      },
+      "roc_auc_ovr": {
+        "mean": 0.8946,
+        "std": 0.0442,
+        "folds": [
+          0.8869,
+          0.8944,
+          0.8798,
+          0.9739,
+          0.8382
+        ],
+        "train_mean": 0.9967,
+        "overfit_gap": 0.1021
+      }
+    },
+    "gradient_boosting": {
+      "fit_seconds": 6.79,
+      "n_splits": 5,
+      "accuracy": {
+        "mean": 0.7249,
+        "std": 0.0486,
+        "folds": [
+          0.7273,
+          0.7922,
+          0.6711,
+          0.7632,
+          0.6711
+        ],
+        "train_mean": 1.0,
+        "overfit_gap": 0.2751
+      },
+      "f1_macro": {
+        "mean": 0.7319,
+        "std": 0.0477,
+        "folds": [
+          0.7373,
+          0.7963,
+          0.676,
+          0.7697,
+          0.6804
+        ],
+        "train_mean": 1.0,
+        "overfit_gap": 0.2681
+      },
+      "precision_macro": {
+        "mean": 0.7331,
+        "std": 0.046,
+        "folds": [
+          0.7412,
+          0.7929,
+          0.6717,
+          0.7695,
+          0.6902
+        ],
+        "train_mean": 1.0,
+        "overfit_gap": 0.2669
+      },
+      "recall_macro": {
+        "mean": 0.733,
+        "std": 0.0501,
+        "folds": [
+          0.7338,
+          0.8013,
+          0.6824,
+          0.7747,
+          0.6729
+        ],
+        "train_mean": 1.0,
+        "overfit_gap": 0.267
+      },
+      "roc_auc_ovr": {
+        "mean": 0.8585,
+        "std": 0.0317,
+        "folds": [
+          0.8693,
+          0.8681,
+          0.8396,
+          0.9049,
+          0.8105
+        ],
+        "train_mean": 1.0,
+        "overfit_gap": 0.1415
+      }
+    }
+  },
+  "cv_ranking": [
+    "random_forest",
+    "logistic_regression",
+    "gradient_boosting",
+    "decision_tree"
+  ],
+  "tuning": {
+    "random_forest": {
+      "tuned": true,
+      "best_params": {
+        "n_estimators": 300,
+        "min_samples_leaf": 1,
+        "max_features": 0.5,
+        "max_depth": 12
+      },
+      "best_cv_score": 0.7899,
+      "n_candidates": 40,
+      "search_seconds": 365.2
+    },
+    "logistic_regression": {
+      "tuned": true,
+      "best_params": {
+        "solver": "lbfgs",
+        "penalty": "l2",
+        "C": 1.0
+      },
+      "best_cv_score": 0.7511,
+      "n_candidates": 6,
+      "search_seconds": 5.8
+    },
+    "decision_tree": {
+      "tuned": false
+    },
+    "gradient_boosting": {
+      "tuned": false
+    }
+  },
+  "test_evaluation": {
+    "random_forest": {
+      "accuracy": 0.8229,
+      "balanced_accuracy": 0.8329,
+      "f1_macro": 0.8282,
+      "f1_weighted": 0.8221,
+      "precision_macro": 0.8261,
+      "recall_macro": 0.8329,
+      "cohen_kappa": 0.7285,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          23,
+          2,
+          0
+        ],
+        [
+          5,
+          33,
+          4
+        ],
+        [
+          0,
+          6,
+          23
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.8214,
+          "recall": 0.92,
+          "f1": 0.8679,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.8049,
+          "recall": 0.7857,
+          "f1": 0.7952,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.8519,
+          "recall": 0.7931,
+          "f1": 0.8214,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.9176,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    },
+    "logistic_regression": {
+      "accuracy": 0.7396,
+      "balanced_accuracy": 0.7569,
+      "f1_macro": 0.7477,
+      "f1_weighted": 0.7372,
+      "precision_macro": 0.7422,
+      "recall_macro": 0.7569,
+      "cohen_kappa": 0.6027,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          22,
+          3,
+          0
+        ],
+        [
+          7,
+          28,
+          7
+        ],
+        [
+          0,
+          8,
+          21
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.7586,
+          "recall": 0.88,
+          "f1": 0.8148,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.7179,
+          "recall": 0.6667,
+          "f1": 0.6914,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.75,
+          "recall": 0.7241,
+          "f1": 0.7368,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.8678,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    },
+    "decision_tree": {
+      "accuracy": 0.6979,
+      "balanced_accuracy": 0.7216,
+      "f1_macro": 0.7086,
+      "f1_weighted": 0.6939,
+      "precision_macro": 0.7003,
+      "recall_macro": 0.7216,
+      "cohen_kappa": 0.5411,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          22,
+          3,
+          0
+        ],
+        [
+          7,
+          25,
+          10
+        ],
+        [
+          0,
+          9,
+          20
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.7586,
+          "recall": 0.88,
+          "f1": 0.8148,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.6757,
+          "recall": 0.5952,
+          "f1": 0.6329,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.6667,
+          "recall": 0.6897,
+          "f1": 0.678,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.7935,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    },
+    "gradient_boosting": {
+      "accuracy": 0.7083,
+      "balanced_accuracy": 0.7134,
+      "f1_macro": 0.7172,
+      "f1_weighted": 0.709,
+      "precision_macro": 0.7217,
+      "recall_macro": 0.7134,
+      "cohen_kappa": 0.5487,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          19,
+          6,
+          0
+        ],
+        [
+          5,
+          29,
+          8
+        ],
+        [
+          0,
+          9,
+          20
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.7917,
+          "recall": 0.76,
+          "f1": 0.7755,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.6591,
+          "recall": 0.6905,
+          "f1": 0.6744,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.7143,
+          "recall": 0.6897,
+          "f1": 0.7018,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.8804,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    }
+  },
+  "test_metrics": {
+    "random_forest": {
+      "accuracy": 0.8229,
+      "balanced_accuracy": 0.8329,
+      "f1_macro": 0.8282,
+      "f1_weighted": 0.8221,
+      "precision_macro": 0.8261,
+      "recall_macro": 0.8329,
+      "cohen_kappa": 0.7285,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          23,
+          2,
+          0
+        ],
+        [
+          5,
+          33,
+          4
+        ],
+        [
+          0,
+          6,
+          23
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.8214,
+          "recall": 0.92,
+          "f1": 0.8679,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.8049,
+          "recall": 0.7857,
+          "f1": 0.7952,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.8519,
+          "recall": 0.7931,
+          "f1": 0.8214,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.9176,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    },
+    "logistic_regression": {
+      "accuracy": 0.7396,
+      "balanced_accuracy": 0.7569,
+      "f1_macro": 0.7477,
+      "f1_weighted": 0.7372,
+      "precision_macro": 0.7422,
+      "recall_macro": 0.7569,
+      "cohen_kappa": 0.6027,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          22,
+          3,
+          0
+        ],
+        [
+          7,
+          28,
+          7
+        ],
+        [
+          0,
+          8,
+          21
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.7586,
+          "recall": 0.88,
+          "f1": 0.8148,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.7179,
+          "recall": 0.6667,
+          "f1": 0.6914,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.75,
+          "recall": 0.7241,
+          "f1": 0.7368,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.8678,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    },
+    "decision_tree": {
+      "accuracy": 0.6979,
+      "balanced_accuracy": 0.7216,
+      "f1_macro": 0.7086,
+      "f1_weighted": 0.6939,
+      "precision_macro": 0.7003,
+      "recall_macro": 0.7216,
+      "cohen_kappa": 0.5411,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          22,
+          3,
+          0
+        ],
+        [
+          7,
+          25,
+          10
+        ],
+        [
+          0,
+          9,
+          20
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.7586,
+          "recall": 0.88,
+          "f1": 0.8148,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.6757,
+          "recall": 0.5952,
+          "f1": 0.6329,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.6667,
+          "recall": 0.6897,
+          "f1": 0.678,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.7935,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    },
+    "gradient_boosting": {
+      "accuracy": 0.7083,
+      "balanced_accuracy": 0.7134,
+      "f1_macro": 0.7172,
+      "f1_weighted": 0.709,
+      "precision_macro": 0.7217,
+      "recall_macro": 0.7134,
+      "cohen_kappa": 0.5487,
+      "n_test": 96,
+      "confusion_matrix": [
+        [
+          19,
+          6,
+          0
+        ],
+        [
+          5,
+          29,
+          8
+        ],
+        [
+          0,
+          9,
+          20
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "L",
+        "M",
+        "H"
+      ],
+      "per_class": {
+        "L": {
+          "precision": 0.7917,
+          "recall": 0.76,
+          "f1": 0.7755,
+          "support": 25
+        },
+        "M": {
+          "precision": 0.6591,
+          "recall": 0.6905,
+          "f1": 0.6744,
+          "support": 42
+        },
+        "H": {
+          "precision": 0.7143,
+          "recall": 0.6897,
+          "f1": 0.7018,
+          "support": 29
+        }
+      },
+      "roc_auc_ovr": 0.8804,
+      "severe_errors": 0,
+      "severe_error_rate": 0.0
+    }
+  },
+  "best_model": "random_forest",
+  "runner_up_model": "logistic_regression",
+  "bootstrap": {
+    "random_forest": {
+      "n_iterations": 2000,
+      "n_skipped_degenerate": 0,
+      "confidence_level": 0.95,
+      "test_set_size": 96,
+      "accuracy": {
+        "point_estimate": 0.8229,
+        "bootstrap_mean": 0.8238,
+        "bootstrap_std": 0.039,
+        "ci_lower": 0.7396,
+        "ci_upper": 0.8958,
+        "ci_width": 0.1562
+      },
+      "f1_macro": {
+        "point_estimate": 0.8282,
+        "bootstrap_mean": 0.8267,
+        "bootstrap_std": 0.0384,
+        "ci_lower": 0.7478,
+        "ci_upper": 0.8978,
+        "ci_width": 0.15
+      },
+      "f1_weighted": {
+        "point_estimate": 0.8221,
+        "bootstrap_mean": 0.8229,
+        "bootstrap_std": 0.0394,
+        "ci_lower": 0.7429,
+        "ci_upper": 0.8954,
+        "ci_width": 0.1526
+      }
+    },
+    "logistic_regression": {
+      "n_iterations": 2000,
+      "n_skipped_degenerate": 0,
+      "confidence_level": 0.95,
+      "test_set_size": 96,
+      "accuracy": {
+        "point_estimate": 0.7396,
+        "bootstrap_mean": 0.7408,
+        "bootstrap_std": 0.045,
+        "ci_lower": 0.6458,
+        "ci_upper": 0.8229,
+        "ci_width": 0.1771
+      },
+      "f1_macro": {
+        "point_estimate": 0.7477,
+        "bootstrap_mean": 0.7458,
+        "bootstrap_std": 0.0441,
+        "ci_lower": 0.6554,
+        "ci_upper": 0.8285,
+        "ci_width": 0.1731
+      },
+      "f1_weighted": {
+        "point_estimate": 0.7372,
+        "bootstrap_mean": 0.7386,
+        "bootstrap_std": 0.0457,
+        "ci_lower": 0.6463,
+        "ci_upper": 0.8234,
+        "ci_width": 0.1771
+      }
+    }
+  },
+  "mcnemar": {
+    "model_a": "random_forest",
+    "model_b": "logistic_regression",
+    "contingency": {
+      "both_correct": 68,
+      "only_a_correct": 11,
+      "only_b_correct": 3,
+      "both_wrong": 14
+    },
+    "n_discordant": 14,
+    "statistic_min_discordant": 3,
+    "p_value": 0.057373,
+    "alpha": 0.05,
+    "significant": false,
+    "test_used": "exact binomial (McNemar)",
+    "interpretation": "There is no statistically significant difference between random_forest and logistic_regression (McNemar exact p = 0.0574, threshold 0.05). They disagree on 14 of 96 students, splitting 11/3 \u2014 close enough to even that the gap in headline scores is within noise. Since the models are statistically tied, the choice should be made on secondary grounds: interpretability, training cost and prediction stability."
+  },
+  "error_analysis": {
+    "n_misclassified": 17,
+    "n_test": 96,
+    "error_rate": 0.1771,
+    "confusion_pairs": {
+      "H -> M": 6,
+      "M -> L": 5,
+      "M -> H": 4,
+      "L -> M": 2
+    },
+    "adjacent_band_errors": 17,
+    "severe_errors_low_vs_high": 0,
+    "feature_profile": {
+      "raisedhands": {
+        "friendly_name": "Hands raised in class",
+        "mean_when_wrong": 39.9,
+        "mean_when_correct": 48.7,
+        "difference": -8.8
+      },
+      "VisITedResources": {
+        "friendly_name": "Learning resources opened",
+        "mean_when_wrong": 65.9,
+        "mean_when_correct": 53.3,
+        "difference": 12.6
+      },
+      "AnnouncementsView": {
+        "friendly_name": "Announcements read",
+        "mean_when_wrong": 29.9,
+        "mean_when_correct": 37.3,
+        "difference": -7.4
+      },
+      "Discussion": {
+        "friendly_name": "Discussion posts",
+        "mean_when_wrong": 46.6,
+        "mean_when_correct": 41.7,
+        "difference": 4.8
+      }
+    },
+    "error_rate_by_group": {
+      "gender": {
+        "F": {
+          "n": 32,
+          "n_wrong": 6,
+          "error_rate": 0.1875,
+          "reliable": true
+        },
+        "M": {
+          "n": 64,
+          "n_wrong": 11,
+          "error_rate": 0.1719,
+          "reliable": true
+        }
+      },
+      "NationalITy": {
+        "Egypt": {
+          "n": 3,
+          "n_wrong": 0,
+          "error_rate": 0.0,
+          "reliable": false
+        },
+        "Iran": {
+          "n": 1,
+          "n_wrong": 0,
+          "error_rate": 0.0,
+          "reliable": false
+        },
+        "Iraq": {
+          "n": 1,
+          "n_wrong": 0,
+          "error_rate": 0.0,
+          "reliable": false
+        },
+        "Jordan": {
+          "n": 33,
+          "n_wrong": 5,
+          "error_rate": 0.1515,
+          "reliable": true
+        },
+        "KW": {
+          "n": 39,
+          "n_wrong": 8,
+          "error_rate": 0.2051,
+          "reliable": true
+        },
+        "Lybia": {
+          "n": 1,
+          "n_wrong": 0,
+          "error_rate": 0.0,
+          "reliable": false
+        },
+        "Palestine": {
+          "n": 8,
+          "n_wrong": 2,
+          "error_rate": 0.25,
+          "reliable": false
+        },
+        "SaudiArabia": {
+          "n": 2,
+          "n_wrong": 0,
+          "error_rate": 0.0,
+          "reliable": false
+        },
+        "Syria": {
+          "n": 4,
+          "n_wrong": 1,
+          "error_rate": 0.25,
+          "reliable": false
+        },
+        "Tunis": {
+          "n": 1,
+          "n_wrong": 0,
+          "error_rate": 0.0,
+          "reliable": false
+        },
+        "USA": {
+          "n": 1,
+          "n_wrong": 0,
+          "error_rate": 0.0,
+          "reliable": false
+        },
+        "lebanon": {
+          "n": 2,
+          "n_wrong": 1,
+          "error_rate": 0.5,
+          "reliable": false
+        }
+      },
+      "StudentAbsenceDays": {
+        "Above-7": {
+          "n": 40,
+          "n_wrong": 5,
+          "error_rate": 0.125,
+          "reliable": true
+        },
+        "Under-7": {
+          "n": 56,
+          "n_wrong": 12,
+          "error_rate": 0.2143,
+          "reliable": true
+        }
+      }
+    },
+    "example_misclassifications": [
+      {
+        "actual": "H",
+        "predicted": "M",
+        "raisedhands": 14,
+        "VisITedResources": 60,
+        "AnnouncementsView": 11,
+        "Discussion": 75,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "F"
+      },
+      {
+        "actual": "H",
+        "predicted": "M",
+        "raisedhands": 15,
+        "VisITedResources": 90,
+        "AnnouncementsView": 52,
+        "Discussion": 83,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "M"
+      },
+      {
+        "actual": "M",
+        "predicted": "H",
+        "raisedhands": 72,
+        "VisITedResources": 80,
+        "AnnouncementsView": 58,
+        "Discussion": 66,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "M"
+      },
+      {
+        "actual": "L",
+        "predicted": "M",
+        "raisedhands": 49,
+        "VisITedResources": 36,
+        "AnnouncementsView": 32,
+        "Discussion": 44,
+        "StudentAbsenceDays": "Above-7",
+        "gender": "F"
+      },
+      {
+        "actual": "M",
+        "predicted": "H",
+        "raisedhands": 90,
+        "VisITedResources": 70,
+        "AnnouncementsView": 30,
+        "Discussion": 14,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "M"
+      },
+      {
+        "actual": "M",
+        "predicted": "L",
+        "raisedhands": 0,
+        "VisITedResources": 12,
+        "AnnouncementsView": 3,
+        "Discussion": 3,
+        "StudentAbsenceDays": "Above-7",
+        "gender": "M"
+      },
+      {
+        "actual": "M",
+        "predicted": "L",
+        "raisedhands": 19,
+        "VisITedResources": 72,
+        "AnnouncementsView": 15,
+        "Discussion": 50,
+        "StudentAbsenceDays": "Above-7",
+        "gender": "M"
+      },
+      {
+        "actual": "M",
+        "predicted": "H",
+        "raisedhands": 79,
+        "VisITedResources": 72,
+        "AnnouncementsView": 79,
+        "Discussion": 83,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "M"
+      },
+      {
+        "actual": "H",
+        "predicted": "M",
+        "raisedhands": 13,
+        "VisITedResources": 80,
+        "AnnouncementsView": 40,
+        "Discussion": 88,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "F"
+      },
+      {
+        "actual": "M",
+        "predicted": "L",
+        "raisedhands": 70,
+        "VisITedResources": 98,
+        "AnnouncementsView": 7,
+        "Discussion": 5,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "F"
+      },
+      {
+        "actual": "H",
+        "predicted": "M",
+        "raisedhands": 80,
+        "VisITedResources": 80,
+        "AnnouncementsView": 15,
+        "Discussion": 70,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "M"
+      },
+      {
+        "actual": "H",
+        "predicted": "M",
+        "raisedhands": 15,
+        "VisITedResources": 97,
+        "AnnouncementsView": 22,
+        "Discussion": 10,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "F"
+      },
+      {
+        "actual": "H",
+        "predicted": "M",
+        "raisedhands": 19,
+        "VisITedResources": 98,
+        "AnnouncementsView": 20,
+        "Discussion": 2,
+        "StudentAbsenceDays": "Under-7",
+        "gender": "F"
+      },
+      {
+        "actual": "M",
+        "predicted": "L",
+        "raisedhands": 7,
+        "VisITedResources": 4,
+        "AnnouncementsView": 10,
+        "Discussion": 50,
+        "StudentAbsenceDays": "Above-7",
+        "gender": "M"
+      },
+      {
+        "actual": "M",
+        "predicted": "L",
+        "raisedhands": 32,
+        "VisITedResources": 14,
+        "AnnouncementsView": 32,
+        "Discussion": 29,
+        "StudentAbsenceDays": "Above-7",
+        "gender": "M"
+      }
+    ],
+    "summary": "17 of 96 test students are misclassified (17.7%). 17 of those errors are between *adjacent* bands (Low<->Medium or Medium<->High), and only 0 confuse Low with High \u2014 the mistake that would actually mislead a teacher. The most common single error is H -> M (6 students)."
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "n_samples": 3,
+  "samples": [
+    {
+      "prediction": {
+        "predicted_class": "L",
+        "predicted_label": "Low",
+        "model_name": "random_forest",
+        "probabilities": {
+          "L": 0.9867,
+          "M": 0.0133,
+          "H": 0.0
+        },
+        "probabilities_labelled": {
+          "Low": 0.9867,
+          "Medium": 0.0133,
+          "High": 0.0
+        },
+        "confidence": 0.9867,
+        "confidence_level": "high",
+        "confidence_note": "The model is confident about this: Low with 99% certainty, well clear of the alternatives.",
+        "runner_up_class": "M",
+        "runner_up_probability": 0.0133,
+        "margin": 0.9733,
+        "is_borderline": false
+      },
+      "top_factors": [],
+      "improvement_suggestions": [],
+      "counterfactual": {
+        "current_prediction": {
+          "predicted_class": "L",
+          "predicted_label": "Low",
+          "model_name": "random_forest",
+          "probabilities": {
+            "L": 0.9867,
+            "M": 0.0133,
+            "H": 0.0
+          },
+          "probabilities_labelled": {
+            "Low": 0.9867,
+            "Medium": 0.0133,
+            "High": 0.0
+          },
+          "confidence": 0.9867,
+          "confidence_level": "high",
+          "confidence_note": "The model is confident about this: Low with 99% certainty, well clear of the alternatives.",
+          "runner_up_class": "M",
+          "runner_up_probability": 0.0133,
+          "margin": 0.9733,
+          "is_borderline": false
+        },
+        "counterfactuals": [
+          {
+            "changes": [
+              {
+                "feature": "raisedhands",
+                "friendly_name": "Hands raised in class",
+                "from": "10",
+                "to": "58",
+                "delta": 48.0,
+                "text": "Increase hands raised in class from 10 to 58 (+48, about 480% more)"
+              },
+              {
+                "feature": "AnnouncementsView",
+                "friendly_name": "Announcements read",
+                "from": "0",
+                "to": "35",
+                "delta": 35.0,
+                "text": "Increase announcements read from 0 to 35 (+35)"
+              }
+            ],
+            "n_changes": 2,
+            "new_class": "M",
+            "new_label": "Medium",
+            "new_confidence": 0.5333,
+            "effort_score": 2.83,
+            "summary": "Together, these would move the prediction to Medium: increase hands raised in class from 10 to 58 (+48, about 480% more); increase announcements read from 0 to 35 (+35)."
+          }
+        ],
+        "n_found": 1,
+        "backend": "greedy",
+        "backend_error": null,
+        "message": "1 realistic route(s) to a better outcome. The most achievable requires 2 change(s): Together, these would move the prediction to Medium: increase hands raised in class from 10 to 58 (+48, about 480% more); increase announcements read from 0 to 35 (+35)."
+      },
+      "summary": "This student is predicted as **Low** (confidence: 99%).",
+      "student_index": 2,
+      "actual_class": "L"
+    },
+    {
+      "prediction": {
+        "predicted_class": "M",
+        "predicted_label": "Medium",
+        "model_name": "random_forest",
+        "probabilities": {
+          "L": 0.1,
+          "M": 0.8,
+          "H": 0.1
+        },
+        "probabilities_labelled": {
+          "Low": 0.1,
+          "Medium": 0.8,
+          "High": 0.1
+        },
+        "confidence": 0.8,
+        "confidence_level": "high",
+        "confidence_note": "The model is confident about this: Medium with 80% certainty, well clear of the alternatives.",
+        "runner_up_class": "H",
+        "runner_up_probability": 0.1,
+        "margin": 0.7,
+        "is_borderline": false
+      },
+      "top_factors": [],
+      "improvement_suggestions": [],
+      "counterfactual": null,
+      "summary": "This student is predicted as **Medium** (confidence: 80%).",
+      "student_index": 0,
+      "actual_class": "M"
+    },
+    {
+      "prediction": {
+        "predicted_class": "H",
+        "predicted_label": "High",
+        "model_name": "random_forest",
+        "probabilities": {
+          "L": 0.01,
+          "M": 0.237,
+          "H": 0.753
+        },
+        "probabilities_labelled": {
+          "Low": 0.01,
+          "Medium": 0.237,
+          "High": 0.753
+        },
+        "confidence": 0.753,
+        "confidence_level": "moderate",
+        "confidence_note": "Moderate confidence: High at 75%. Worth combining with your own knowledge of the student rather than taking on its own.",
+        "runner_up_class": "M",
+        "runner_up_probability": 0.237,
+        "margin": 0.5159,
+        "is_borderline": false
+      },
+      "top_factors": [],
+      "improvement_suggestions": [],
+      "counterfactual": null,
+      "summary": "This student is predicted as **High** (confidence: 75%).",
+      "student_index": 10,
+      "actual_class": "H"
+    }
+  ]
+}

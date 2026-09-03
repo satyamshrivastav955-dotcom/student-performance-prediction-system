@@ -1,0 +1,241 @@
+{
+  "class_order": [
+    "L",
+    "M",
+    "H"
+  ],
+  "n_students": 478,
+  "attribute_audits": [
+    {
+      "attribute": "Gender",
+      "metrics": {
+        "library": "fairlearn",
+        "by_group": {
+          "accuracy": {
+            "F": 1.0,
+            "M": 0.9967
+          },
+          "selection_rate": {
+            "F": 0.4343,
+            "M": 0.4422
+          }
+        },
+        "overall_accuracy": 0.9979,
+        "demographic_parity_difference": 0.008,
+        "demographic_parity_ratio": 0.982,
+        "equalized_odds_difference": null
+      },
+      "per_class": {
+        "L": {
+          "selection_rates": {
+            "F": 0.13714285714285715,
+            "M": 0.33663366336633666
+          },
+          "demographic_parity_difference": 0.1995,
+          "demographic_parity_ratio": 0.4074
+        },
+        "M": {
+          "selection_rates": {
+            "F": 0.4342857142857143,
+            "M": 0.44224422442244227
+          },
+          "demographic_parity_difference": 0.008,
+          "demographic_parity_ratio": 0.982
+        },
+        "H": {
+          "selection_rates": {
+            "F": 0.42857142857142855,
+            "M": 0.22112211221122113
+          },
+          "demographic_parity_difference": 0.2074,
+          "demographic_parity_ratio": 0.516
+        }
+      },
+      "group_info": {
+        "group_sizes": {
+          "F": 175,
+          "M": 303
+        },
+        "small_groups": {},
+        "caveat": null
+      },
+      "interpretation": {
+        "attribute": "Gender",
+        "verdict": "acceptable",
+        "headline": "No significant fairness issues detected for Gender.",
+        "findings": [
+          "Demographic parity ratio across Gender: 0.98 (above the 80% threshold \u2014 no adverse impact detected)."
+        ],
+        "flags": []
+      }
+    },
+    {
+      "attribute": "Nationality",
+      "metrics": {
+        "library": "fairlearn",
+        "by_group": {
+          "accuracy": {
+            "Egypt": 1.0,
+            "Iran": 1.0,
+            "Iraq": 1.0,
+            "Jordan": 1.0,
+            "KW": 0.9944,
+            "Lybia": 1.0,
+            "Morocco": 1.0,
+            "Palestine": 1.0,
+            "SaudiArabia": 1.0,
+            "Syria": 1.0,
+            "Tunis": 1.0,
+            "USA": 1.0,
+            "lebanon": 1.0,
+            "venzuela": 1.0
+          },
+          "selection_rate": {
+            "Egypt": 0.4444,
+            "Iran": 0.6667,
+            "Iraq": 0.3636,
+            "Jordan": 0.4824,
+            "KW": 0.4134,
+            "Lybia": 0.0,
+            "Morocco": 0.5,
+            "Palestine": 0.5714,
+            "SaudiArabia": 0.3636,
+            "Syria": 0.4286,
+            "Tunis": 0.4167,
+            "USA": 0.3333,
+            "lebanon": 0.3529,
+            "venzuela": 0.0
+          }
+        },
+        "overall_accuracy": 0.9979,
+        "demographic_parity_difference": 0.6667,
+        "demographic_parity_ratio": 0.0,
+        "equalized_odds_difference": null
+      },
+      "per_class": {
+        "L": {
+          "selection_rates": {
+            "Egypt": 0.3333333333333333,
+            "Iran": 0.3333333333333333,
+            "Iraq": 0.0,
+            "Jordan": 0.20588235294117646,
+            "KW": 0.3854748603351955,
+            "Lybia": 1.0,
+            "Morocco": 0.25,
+            "Palestine": 0.0,
+            "SaudiArabia": 0.09090909090909091,
+            "Syria": 0.2857142857142857,
+            "Tunis": 0.3333333333333333,
+            "USA": 0.16666666666666666,
+            "lebanon": 0.11764705882352941,
+            "venzuela": 0.0
+          },
+          "demographic_parity_difference": 1.0,
+          "demographic_parity_ratio": 0.0
+        },
+        "M": {
+          "selection_rates": {
+            "Egypt": 0.4444444444444444,
+            "Iran": 0.6666666666666666,
+            "Iraq": 0.36363636363636365,
+            "Jordan": 0.4823529411764706,
+            "KW": 0.4134078212290503,
+            "Lybia": 0.0,
+            "Morocco": 0.5,
+            "Palestine": 0.5714285714285714,
+            "SaudiArabia": 0.36363636363636365,
+            "Syria": 0.42857142857142855,
+            "Tunis": 0.4166666666666667,
+            "USA": 0.3333333333333333,
+            "lebanon": 0.35294117647058826,
+            "venzuela": 0.0
+          },
+          "demographic_parity_difference": 0.6667,
+          "demographic_parity_ratio": 0.0
+        },
+        "H": {
+          "selection_rates": {
+            "Egypt": 0.2222222222222222,
+            "Iran": 0.0,
+            "Iraq": 0.6363636363636364,
+            "Jordan": 0.31176470588235294,
+            "KW": 0.2011173184357542,
+            "Lybia": 0.0,
+            "Morocco": 0.25,
+            "Palestine": 0.42857142857142855,
+            "SaudiArabia": 0.5454545454545454,
+            "Syria": 0.2857142857142857,
+            "Tunis": 0.25,
+            "USA": 0.5,
+            "lebanon": 0.5294117647058824,
+            "venzuela": 1.0
+          },
+          "demographic_parity_difference": 1.0,
+          "demographic_parity_ratio": 0.0
+        }
+      },
+      "group_info": {
+        "group_sizes": {
+          "Egypt": 9,
+          "Iran": 6,
+          "Iraq": 22,
+          "Jordan": 170,
+          "KW": 179,
+          "Lybia": 6,
+          "Morocco": 4,
+          "Palestine": 28,
+          "SaudiArabia": 11,
+          "Syria": 7,
+          "Tunis": 12,
+          "USA": 6,
+          "lebanon": 17,
+          "venzuela": 1
+        },
+        "small_groups": {
+          "Egypt": 9,
+          "Iran": 6,
+          "Lybia": 6,
+          "Morocco": 4,
+          "SaudiArabia": 11,
+          "Syria": 7,
+          "Tunis": 12,
+          "USA": 6,
+          "lebanon": 17,
+          "venzuela": 1
+        },
+        "caveat": "Groups with fewer than 20 students are too small for reliable fairness metrics. Results for these groups (Egypt, Iran, Lybia, Morocco, SaudiArabia, Syria, Tunis, USA, lebanon, venzuela) should be treated as indicative only."
+      },
+      "interpretation": {
+        "attribute": "Nationality",
+        "verdict": "concern",
+        "headline": "Potential fairness concern detected for Nationality.",
+        "findings": [
+          "The demographic parity ratio across Nationality is 0.00, below the 80% threshold. This suggests the model's selection rates differ meaningfully across groups.",
+          "Demographic parity difference: 0.67 (above 0.10 threshold)."
+        ],
+        "flags": [
+          "demographic_parity_ratio_below_threshold",
+          "demographic_parity_difference_above_threshold"
+        ]
+      }
+    }
+  ],
+  "overall_verdict": {
+    "verdict": "concern",
+    "headline": "Some disparity was detected for: Nationality. See the per-attribute findings for details.",
+    "recommendation": "These disparities may reflect genuine differences in the underlying data rather than model bias. Before acting on them: (1) check whether the base rates differ across groups, (2) consider whether the features the model relies on are proxies for the sensitive attribute, and (3) consult with stakeholders about which fairness definition matters most in this context.",
+    "flags": [
+      "demographic_parity_ratio_below_threshold",
+      "demographic_parity_difference_above_threshold"
+    ]
+  },
+  "methodology": {
+    "description": "We checked demographic parity (equal selection rates across groups) and equalized odds (equal TPR and FPR across groups) for each sensitive attribute. The four-fifths rule (selection rate ratio \u2265 0.80) was used as the adverse-impact threshold.",
+    "library": "fairlearn",
+    "thresholds": {
+      "disparity_ratio": 0.8,
+      "disparity_difference": 0.1,
+      "min_group_size": 20
+    }
+  }
+}

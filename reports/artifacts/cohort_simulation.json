@@ -1,0 +1,285 @@
+{
+  "n_scenarios": 5,
+  "scenarios": [
+    {
+      "intervention": {
+        "raisedhands": 15,
+        "VisITedResources": 15
+      },
+      "intervention_description": "Hands raised in class: increase by 15%; Learning resources opened: increase by 15%",
+      "n_runs": 500,
+      "n_students": 478,
+      "baseline": {
+        "distribution": {
+          "L": 0.2636,
+          "M": 0.4393,
+          "H": 0.2971
+        },
+        "counts": {
+          "L": 126,
+          "M": 210,
+          "H": 142
+        }
+      },
+      "simulated": {
+        "distribution_mean": {
+          "L": 0.2555,
+          "M": 0.3704,
+          "H": 0.3741
+        },
+        "distribution_ci_lower": {
+          "L": 0.2552,
+          "M": 0.365,
+          "H": 0.3682
+        },
+        "distribution_ci_upper": {
+          "L": 0.2573,
+          "M": 0.3766,
+          "H": 0.3787
+        },
+        "distribution_std": {
+          "L": 0.0008,
+          "M": 0.003,
+          "H": 0.0028
+        },
+        "mean_counts": {
+          "L": 122.1,
+          "M": 177.1,
+          "H": 178.8
+        }
+      },
+      "shift": {
+        "L": -0.0081,
+        "M": -0.0689,
+        "H": 0.077
+      },
+      "summary": "Low: 26.4% \u2192 25.6% (\u21930.8pp) | Medium: 43.9% \u2192 37.0% (\u21936.9pp) | High: 29.7% \u2192 37.4% (\u21917.7pp)",
+      "scenario_name": "Boost Participation (+15%)",
+      "scenario_description": "All students raise their hands and visit resources 15% more often."
+    },
+    {
+      "intervention": {
+        "StudentAbsenceDays": 30
+      },
+      "intervention_description": "Absence level: increase by 30%",
+      "n_runs": 500,
+      "n_students": 478,
+      "baseline": {
+        "distribution": {
+          "L": 0.2636,
+          "M": 0.4393,
+          "H": 0.2971
+        },
+        "counts": {
+          "L": 126,
+          "M": 210,
+          "H": 142
+        }
+      },
+      "simulated": {
+        "distribution_mean": {
+          "L": 0.2236,
+          "M": 0.4655,
+          "H": 0.3109
+        },
+        "distribution_ci_lower": {
+          "L": 0.2113,
+          "M": 0.4498,
+          "H": 0.3033
+        },
+        "distribution_ci_upper": {
+          "L": 0.2364,
+          "M": 0.4812,
+          "H": 0.318
+        },
+        "distribution_std": {
+          "L": 0.0065,
+          "M": 0.0084,
+          "H": 0.0041
+        },
+        "mean_counts": {
+          "L": 106.9,
+          "M": 222.5,
+          "H": 148.6
+        }
+      },
+      "shift": {
+        "L": -0.04,
+        "M": 0.0262,
+        "H": 0.0138
+      },
+      "summary": "Low: 26.4% \u2192 22.4% (\u21934.0pp) | Medium: 43.9% \u2192 46.6% (\u21912.6pp) | High: 29.7% \u2192 31.1% (\u21911.4pp)",
+      "scenario_name": "Improve Attendance",
+      "scenario_description": "30% of students with high absences switch to low absences."
+    },
+    {
+      "intervention": {
+        "Discussion": 20
+      },
+      "intervention_description": "Discussion posts: increase by 20%",
+      "n_runs": 500,
+      "n_students": 478,
+      "baseline": {
+        "distribution": {
+          "L": 0.2636,
+          "M": 0.4393,
+          "H": 0.2971
+        },
+        "counts": {
+          "L": 126,
+          "M": 210,
+          "H": 142
+        }
+      },
+      "simulated": {
+        "distribution_mean": {
+          "L": 0.2676,
+          "M": 0.4332,
+          "H": 0.2991
+        },
+        "distribution_ci_lower": {
+          "L": 0.2657,
+          "M": 0.4331,
+          "H": 0.2992
+        },
+        "distribution_ci_upper": {
+          "L": 0.2678,
+          "M": 0.4351,
+          "H": 0.2992
+        },
+        "distribution_std": {
+          "L": 0.0005,
+          "M": 0.0006,
+          "H": 0.0003
+        },
+        "mean_counts": {
+          "L": 127.9,
+          "M": 207.1,
+          "H": 143.0
+        }
+      },
+      "shift": {
+        "L": 0.004,
+        "M": -0.0061,
+        "H": 0.002
+      },
+      "summary": "Low: 26.4% \u2192 26.8% (\u21910.4pp) | Medium: 43.9% \u2192 43.3% (\u21930.6pp) | High: 29.7% \u2192 29.9% (\u21910.2pp)",
+      "scenario_name": "Discussion Focus (+20%)",
+      "scenario_description": "All students increase their discussion participation by 20%."
+    },
+    {
+      "intervention": {
+        "raisedhands": 15,
+        "VisITedResources": 15,
+        "Discussion": 10,
+        "StudentAbsenceDays": 25
+      },
+      "intervention_description": "Hands raised in class: increase by 15%; Learning resources opened: increase by 15%; Discussion posts: increase by 10%; Absence level: increase by 25%",
+      "n_runs": 500,
+      "n_students": 478,
+      "baseline": {
+        "distribution": {
+          "L": 0.2636,
+          "M": 0.4393,
+          "H": 0.2971
+        },
+        "counts": {
+          "L": 126,
+          "M": 210,
+          "H": 142
+        }
+      },
+      "simulated": {
+        "distribution_mean": {
+          "L": 0.2208,
+          "M": 0.3845,
+          "H": 0.3947
+        },
+        "distribution_ci_lower": {
+          "L": 0.2071,
+          "M": 0.364,
+          "H": 0.3828
+        },
+        "distribution_ci_upper": {
+          "L": 0.2343,
+          "M": 0.4038,
+          "H": 0.4079
+        },
+        "distribution_std": {
+          "L": 0.0066,
+          "M": 0.0102,
+          "H": 0.0061
+        },
+        "mean_counts": {
+          "L": 105.6,
+          "M": 183.8,
+          "H": 188.7
+        }
+      },
+      "shift": {
+        "L": -0.0428,
+        "M": -0.0548,
+        "H": 0.0976
+      },
+      "summary": "Low: 26.4% \u2192 22.1% (\u21934.3pp) | Medium: 43.9% \u2192 38.5% (\u21935.5pp) | High: 29.7% \u2192 39.5% (\u21919.8pp)",
+      "scenario_name": "Combined Engagement Programme",
+      "scenario_description": "A realistic multi-factor intervention: participation up 15%, resource visits up 15%, discussions up 10%, and 25% of high-absence students shift to low absence."
+    },
+    {
+      "intervention": {
+        "AnnouncementsView": 25
+      },
+      "intervention_description": "Announcements read: increase by 25%",
+      "n_runs": 500,
+      "n_students": 478,
+      "baseline": {
+        "distribution": {
+          "L": 0.2636,
+          "M": 0.4393,
+          "H": 0.2971
+        },
+        "counts": {
+          "L": 126,
+          "M": 210,
+          "H": 142
+        }
+      },
+      "simulated": {
+        "distribution_mean": {
+          "L": 0.2657,
+          "M": 0.4331,
+          "H": 0.3012
+        },
+        "distribution_ci_lower": {
+          "L": 0.2657,
+          "M": 0.4331,
+          "H": 0.2992
+        },
+        "distribution_ci_upper": {
+          "L": 0.2657,
+          "M": 0.4351,
+          "H": 0.3013
+        },
+        "distribution_std": {
+          "L": 0.0,
+          "M": 0.0004,
+          "H": 0.0004
+        },
+        "mean_counts": {
+          "L": 127.0,
+          "M": 207.0,
+          "H": 144.0
+        }
+      },
+      "shift": {
+        "L": 0.0021,
+        "M": -0.0062,
+        "H": 0.0041
+      },
+      "summary": "Low: 26.4% \u2192 26.6% (\u21910.2pp) | Medium: 43.9% \u2192 43.3% (\u21930.6pp) | High: 29.7% \u2192 30.1% (\u21910.4pp)",
+      "scenario_name": "Announcements Campaign (+25%)",
+      "scenario_description": "All students read 25% more announcements."
+    }
+  ],
+  "methodology": "Monte Carlo simulation with per-student Gaussian noise. Each scenario applies a percentage-based intervention to the feature(s), adds noise to model heterogeneous student response, re-scores the whole cohort, and repeats N times. Results report mean class distribution shifts with 95% confidence intervals."
+}

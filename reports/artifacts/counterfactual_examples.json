@@ -1,0 +1,317 @@
+{
+  "n_students_analysed": 5,
+  "n_with_viable_route": 5,
+  "median_changes_required": 1.0,
+  "backend": "see per-example",
+  "guardrails": {
+    "features_allowed_to_change": [
+      "raisedhands",
+      "VisITedResources",
+      "AnnouncementsView",
+      "Discussion",
+      "StudentAbsenceDays",
+      "ParentAnsweringSurvey"
+    ],
+    "features_never_changed": [
+      "gender",
+      "NationalITy"
+    ],
+    "max_relative_change": 0.6,
+    "note": "Protected attributes are excluded from the search space and independently re-checked afterwards. The engine will never suggest that a student would have done better with a different gender or nationality."
+  },
+  "examples": [
+    {
+      "student_index": 248,
+      "current_class": "L",
+      "confidence": 0.8467,
+      "n_routes_found": 3,
+      "message": "3 realistic route(s) to a better outcome. The most achievable requires 1 change(s): Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium.",
+      "counterfactuals": [
+        {
+          "changes": [
+            {
+              "feature": "StudentAbsenceDays",
+              "friendly_name": "Absence level",
+              "from": "Above-7",
+              "to": "Under-7",
+              "delta": null,
+              "text": "Change absence level from 'Above-7' to 'Under-7'"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.62,
+          "effort_score": 1.0,
+          "summary": "Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium."
+        },
+        {
+          "changes": [
+            {
+              "feature": "VisITedResources",
+              "friendly_name": "Learning resources opened",
+              "from": "40",
+              "to": "79",
+              "delta": 39.0,
+              "text": "Increase learning resources opened from 40 to 79 (+39, about 98% more)"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.53,
+          "effort_score": 1.39,
+          "summary": "Increase learning resources opened from 40 to 79 (+39, about 98% more) \u2014 the model would then predict Medium."
+        },
+        {
+          "changes": [
+            {
+              "feature": "AnnouncementsView",
+              "friendly_name": "Announcements read",
+              "from": "2",
+              "to": "14",
+              "delta": 12.0,
+              "text": "Increase announcements read from 2 to 14 (+12, about 600% more)"
+            },
+            {
+              "feature": "Discussion",
+              "friendly_name": "Discussion posts",
+              "from": "16",
+              "to": "51",
+              "delta": 35.0,
+              "text": "Increase discussion posts from 16 to 51 (+35, about 219% more)"
+            }
+          ],
+          "n_changes": 2,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.52,
+          "effort_score": 2.47,
+          "summary": "Together, these would move the prediction to Medium: increase announcements read from 2 to 14 (+12, about 600% more); increase discussion posts from 16 to 51 (+35, about 219% more)."
+        }
+      ]
+    },
+    {
+      "student_index": 373,
+      "current_class": "L",
+      "confidence": 0.9867,
+      "n_routes_found": 2,
+      "message": "2 realistic route(s) to a better outcome. The most achievable requires 1 change(s): Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium.",
+      "counterfactuals": [
+        {
+          "changes": [
+            {
+              "feature": "StudentAbsenceDays",
+              "friendly_name": "Absence level",
+              "from": "Above-7",
+              "to": "Under-7",
+              "delta": null,
+              "text": "Change absence level from 'Above-7' to 'Under-7'"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.8061,
+          "effort_score": 1.0,
+          "summary": "Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium."
+        },
+        {
+          "changes": [
+            {
+              "feature": "VisITedResources",
+              "friendly_name": "Learning resources opened",
+              "from": "2",
+              "to": "38",
+              "delta": 36.0,
+              "text": "Increase learning resources opened from 2 to 38 (+36, about 1800% more)"
+            },
+            {
+              "feature": "AnnouncementsView",
+              "friendly_name": "Announcements read",
+              "from": "29",
+              "to": "76",
+              "delta": 47.0,
+              "text": "Increase announcements read from 29 to 76 (+47, about 162% more)"
+            }
+          ],
+          "n_changes": 2,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.5233,
+          "effort_score": 2.83,
+          "summary": "Together, these would move the prediction to Medium: increase learning resources opened from 2 to 38 (+36, about 1800% more); increase announcements read from 29 to 76 (+47, about 162% more)."
+        }
+      ]
+    },
+    {
+      "student_index": 3,
+      "current_class": "L",
+      "confidence": 0.9733,
+      "n_routes_found": 3,
+      "message": "3 realistic route(s) to a better outcome. The most achievable requires 1 change(s): Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium.",
+      "counterfactuals": [
+        {
+          "changes": [
+            {
+              "feature": "StudentAbsenceDays",
+              "friendly_name": "Absence level",
+              "from": "Above-7",
+              "to": "Under-7",
+              "delta": null,
+              "text": "Change absence level from 'Above-7' to 'Under-7'"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.706,
+          "effort_score": 1.0,
+          "summary": "Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium."
+        },
+        {
+          "changes": [
+            {
+              "feature": "AnnouncementsView",
+              "friendly_name": "Announcements read",
+              "from": "5",
+              "to": "34",
+              "delta": 29.0,
+              "text": "Increase announcements read from 5 to 34 (+29, about 580% more)"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.5202,
+          "effort_score": 1.29,
+          "summary": "Increase announcements read from 5 to 34 (+29, about 580% more) \u2014 the model would then predict Medium."
+        },
+        {
+          "changes": [
+            {
+              "feature": "VisITedResources",
+              "friendly_name": "Learning resources opened",
+              "from": "25",
+              "to": "79",
+              "delta": 54.0,
+              "text": "Increase learning resources opened from 25 to 79 (+54, about 216% more)"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.6167,
+          "effort_score": 1.54,
+          "summary": "Increase learning resources opened from 25 to 79 (+54, about 216% more) \u2014 the model would then predict Medium."
+        }
+      ]
+    },
+    {
+      "student_index": 290,
+      "current_class": "L",
+      "confidence": 0.7252,
+      "n_routes_found": 3,
+      "message": "3 realistic route(s) to a better outcome. The most achievable requires 1 change(s): Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium.",
+      "counterfactuals": [
+        {
+          "changes": [
+            {
+              "feature": "StudentAbsenceDays",
+              "friendly_name": "Absence level",
+              "from": "Above-7",
+              "to": "Under-7",
+              "delta": null,
+              "text": "Change absence level from 'Above-7' to 'Under-7'"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.8433,
+          "effort_score": 1.0,
+          "summary": "Change absence level from 'Above-7' to 'Under-7' \u2014 the model would then predict Medium."
+        },
+        {
+          "changes": [
+            {
+              "feature": "VisITedResources",
+              "friendly_name": "Learning resources opened",
+              "from": "36",
+              "to": "51",
+              "delta": 15.0,
+              "text": "Increase learning resources opened from 36 to 51 (+15, about 42% more)"
+            }
+          ],
+          "n_changes": 1,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.494,
+          "effort_score": 1.15,
+          "summary": "Increase learning resources opened from 36 to 51 (+15, about 42% more) \u2014 the model would then predict Medium."
+        },
+        {
+          "changes": [
+            {
+              "feature": "raisedhands",
+              "friendly_name": "Hands raised in class",
+              "from": "49",
+              "to": "59",
+              "delta": 10.0,
+              "text": "Increase hands raised in class from 49 to 59 (+10, about 20% more)"
+            },
+            {
+              "feature": "VisITedResources",
+              "friendly_name": "Learning resources opened",
+              "from": "36",
+              "to": "48",
+              "delta": 12.0,
+              "text": "Increase learning resources opened from 36 to 48 (+12, about 33% more)"
+            }
+          ],
+          "n_changes": 2,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.5707,
+          "effort_score": 2.22,
+          "summary": "Together, these would move the prediction to Medium: increase hands raised in class from 49 to 59 (+10, about 20% more); increase learning resources opened from 36 to 48 (+12, about 33% more)."
+        }
+      ]
+    },
+    {
+      "student_index": 144,
+      "current_class": "L",
+      "confidence": 1.0,
+      "n_routes_found": 1,
+      "message": "1 realistic route(s) to a better outcome. The most achievable requires 2 change(s): Together, these would move the prediction to Medium: increase hands raised in class from 10 to 46 (+36, about 360% more); increase learning resources opened from 10 to 69 (+59, about 590% more).",
+      "counterfactuals": [
+        {
+          "changes": [
+            {
+              "feature": "raisedhands",
+              "friendly_name": "Hands raised in class",
+              "from": "10",
+              "to": "46",
+              "delta": 36.0,
+              "text": "Increase hands raised in class from 10 to 46 (+36, about 360% more)"
+            },
+            {
+              "feature": "VisITedResources",
+              "friendly_name": "Learning resources opened",
+              "from": "10",
+              "to": "69",
+              "delta": 59.0,
+              "text": "Increase learning resources opened from 10 to 69 (+59, about 590% more)"
+            }
+          ],
+          "n_changes": 2,
+          "new_class": "M",
+          "new_label": "Medium",
+          "new_confidence": 0.47,
+          "effort_score": 2.95,
+          "summary": "Together, these would move the prediction to Medium: increase hands raised in class from 10 to 46 (+36, about 360% more); increase learning resources opened from 10 to 69 (+59, about 590% more)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "class_distribution": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\01_class_distribution.png",
+    "filename": "01_class_distribution.png",
+    "title": "Performance band distribution",
+    "caption": "Of 478 students, the Medium band is the largest at 44%. The classes are moderately imbalanced (142:211:125 for High:Medium:Low), which is why every model is trained with balanced class weights and scored on macro-F1 rather than plain accuracy."
+  },
+  "numeric_distributions": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\02_numeric_distributions.png",
+    "filename": "02_numeric_distributions.png",
+    "title": "Engagement behaviour by band",
+    "caption": "Each curve shows how common different activity levels are within one performance band. High performers (green) cluster to the right on resources opened and hands raised \u2014 they are simply more active. The curves for discussion posts overlap far more, an early hint that discussion is a much weaker signal than the other three."
+  },
+  "boxplots": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\03_boxplots_by_class.png",
+    "filename": "03_boxplots_by_class.png",
+    "title": "Engagement spread by band",
+    "caption": "The box shows the middle 50% of students and the line inside it the median. Medians step up cleanly from Low to High for resources opened, hands raised and announcements read. For discussion posts the boxes overlap heavily, confirming the weaker relationship."
+  },
+  "correlation": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\04_correlation_heatmap.png",
+    "filename": "04_correlation_heatmap.png",
+    "title": "Correlation between engagement measures",
+    "caption": "Values near 1 mean two behaviours move together. The strongest pairing is learning resources opened and hands raised in class at 0.66 \u2014 engaged students tend to be engaged across the board. None of the pairs are so highly correlated that they carry identical information, so all four are worth keeping as separate features."
+  },
+  "absence": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\05_absence_vs_class.png",
+    "filename": "05_absence_vs_class.png",
+    "title": "Attendance vs performance",
+    "caption": "Among students absent fewer than 7 days, 48% reach the High band. Among those absent 7 days or more, only 2% do. This is the largest single effect measured anywhere in the analysis (Cramer's V = 0.68), and it is also the factor a school has the most direct ability to influence."
+  },
+  "categorical_panel": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\06_categorical_panel.png",
+    "filename": "06_categorical_panel.png",
+    "title": "Parental involvement and demographics",
+    "caption": "Each bar is one group of students split by their performance band. Where a parent responded to the school survey, far more students land in the High band. The pattern for which parent is listed as responsible is equally sharp. Note the gender panel: it also differs noticeably, which is precisely why this project runs a formal fairness audit rather than assuming the model treats groups equally."
+  },
+  "engagement_scatter": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\08_engagement_scatter.png",
+    "filename": "08_engagement_scatter.png",
+    "title": "The two strongest behavioural signals",
+    "caption": "Each dot is one student. Low performers (coral) sit in the bottom-left corner, High performers (green) in the top-right, with Medium students bridging the two. The bands overlap in the middle, which is exactly why a model that weighs many factors together beats any single cut-off rule a teacher could apply by eye."
+  },
+  "group_means": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\09_group_means.png",
+    "filename": "09_group_means.png",
+    "title": "Average engagement by band",
+    "caption": "Thin vertical lines are standard errors \u2014 where they do not overlap between bands, the difference in averages is unlikely to be chance. This is the same comparison the ANOVA tests formally, shown here so the result is visible rather than only tabulated."
+  },
+  "topic": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\10_topic_breakdown.png",
+    "filename": "10_topic_breakdown.png",
+    "title": "Subject-wise performance",
+    "caption": "Subjects are ordered by the share of High performers. Biology has the healthiest mix; IT has the largest share of struggling students. Several subjects have small enrolments, so treat the extremes as a prompt to look closer rather than as proof \u2014 this is why the statistical test for subject shows only a medium effect."
+  },
+  "data_quality": {
+    "path": "C:\\Users\\satya\\SKILLORBIT_PROJECT\\student-performance-prediction\\reports\\figures\\11_data_quality.png",
+    "filename": "11_data_quality.png",
+    "title": "Data quality after cleaning",
+    "caption": "Left: every column is 100% populated after preprocessing. Right: the shape of each engagement counter. All four are broadly spread across the full 0-100 range with no single dominant value, meaning none of them is a near-constant column that would contribute nothing to a model."
+  }
+}
