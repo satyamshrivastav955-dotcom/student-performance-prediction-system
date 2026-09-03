@@ -1,0 +1,50 @@
+{
+  "model_name": "random_forest",
+  "task": "3-class student performance classification (Low / Medium / High)",
+  "intended_use": "Decision support for teachers and academic advisors: flag students who may need extra help, and show which changeable behaviours are driving that assessment.",
+  "out_of_scope_use": [
+    "Automated grading or any decision that affects a student's record without a human.",
+    "Admissions, streaming or any high-stakes selection decision.",
+    "Any use where the student is not told the prediction was made or why."
+  ],
+  "training_data": {
+    "source": "xAPI-Edu-Data (Amrieh, Hamtini & Aljarah, 2016)",
+    "n_students": 478,
+    "n_features": 16
+  },
+  "performance": {
+    "test_accuracy": 0.8229,
+    "test_f1_macro": 0.8282,
+    "f1_macro_95_ci": [
+      0.7478,
+      0.8978
+    ],
+    "per_class_f1": {
+      "L": {
+        "precision": 0.8214,
+        "recall": 0.92,
+        "f1": 0.8679,
+        "support": 25
+      },
+      "M": {
+        "precision": 0.8049,
+        "recall": 0.7857,
+        "f1": 0.7952,
+        "support": 42
+      },
+      "H": {
+        "precision": 0.8519,
+        "recall": 0.7931,
+        "f1": 0.8214,
+        "support": 29
+      }
+    }
+  },
+  "limitations": [
+    "Trained on 478 students from a single learning-management system; performance on a different school population is unverified.",
+    "Features are behavioural proxies (clicks, hands raised), not direct measures of understanding.",
+    "The dataset is cross-sectional, so the model describes association, not causation. Counterfactual suggestions should be read as hypotheses to try, not guarantees."
+  ],
+  "fairness": "See reports/artifacts/fairness_audit.json for the demographic parity and equalized-odds audit across gender and nationality.",
+  "ethical_note": "Predictions should always be shown to the student alongside the reasons and the suggested actions, never used as a silent label attached to them."
+}
