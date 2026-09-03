@@ -1,0 +1,100 @@
+{
+  "schema_check": {
+    "n_rows": 480,
+    "n_columns": 17,
+    "columns": [
+      "gender",
+      "NationalITy",
+      "PlaceofBirth",
+      "StageID",
+      "GradeID",
+      "SectionID",
+      "Topic",
+      "Semester",
+      "Relation",
+      "raisedhands",
+      "VisITedResources",
+      "AnnouncementsView",
+      "Discussion",
+      "ParentAnsweringSurvey",
+      "ParentschoolSatisfaction",
+      "StudentAbsenceDays",
+      "Class"
+    ],
+    "missing_values_total": 0,
+    "missing_by_column": {},
+    "exact_duplicate_rows": 2,
+    "numeric_summary": {
+      "raisedhands": {
+        "min": 0.0,
+        "max": 100.0,
+        "mean": 46.77
+      },
+      "VisITedResources": {
+        "min": 0.0,
+        "max": 99.0,
+        "mean": 54.8
+      },
+      "AnnouncementsView": {
+        "min": 0.0,
+        "max": 98.0,
+        "mean": 37.92
+      },
+      "Discussion": {
+        "min": 1.0,
+        "max": 99.0,
+        "mean": 43.28
+      }
+    },
+    "class_distribution": {
+      "M": 211,
+      "H": 142,
+      "L": 127
+    },
+    "binary_levels": {
+      "ParentAnsweringSurvey": [
+        "No",
+        "Yes"
+      ],
+      "ParentschoolSatisfaction": [
+        "Bad",
+        "Good"
+      ],
+      "StudentAbsenceDays": [
+        "Above-7",
+        "Under-7"
+      ]
+    },
+    "problems": [],
+    "warnings": [],
+    "passed": true
+  },
+  "cleaning": {
+    "rows_in": 480,
+    "text_columns_trimmed": [
+      "gender",
+      "NationalITy",
+      "PlaceofBirth",
+      "StageID",
+      "GradeID",
+      "SectionID",
+      "Topic",
+      "Semester",
+      "Relation",
+      "ParentAnsweringSurvey",
+      "ParentschoolSatisfaction",
+      "StudentAbsenceDays",
+      "Class"
+    ],
+    "exact_duplicates_removed": 2,
+    "missing_values_filled": {},
+    "rows_dropped_missing_target": 0,
+    "values_clipped_to_range": {},
+    "rows_out": 478,
+    "class_distribution": {
+      "M": 211,
+      "H": 142,
+      "L": 125
+    }
+  }
+}
