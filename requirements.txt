@@ -1,0 +1,71 @@
+# =============================================================================
+# Student Performance Prediction System — Python dependencies
+#
+# Install with:
+#     pip install -r requirements.txt
+#
+# Versions are pinned with `>=` floors rather than exact `==` pins. The floors
+# are the versions where the APIs this project uses became stable (e.g.
+# scikit-learn 1.2 renamed OneHotEncoder's `sparse` argument to `sparse_output`;
+# the code handles both, but 1.2+ is the tested path).
+#
+# NOTE ON DEEP LEARNING: there is deliberately no TensorFlow, PyTorch, Keras or
+# transformers entry here. The brief rules out deep learning, and the surest way
+# to prove that is for the dependency list to make it impossible.
+# =============================================================================
+
+# --- Core data handling -------------------------------------------------------
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0                 # ANOVA, chi-square, Levene, Kruskal-Wallis
+                              #   (src/utils/stats_fallback.py provides a pure-Python
+                              #    backup if this is ever unavailable)
+PyYAML>=6.0                   # config/config.yaml is the single source of truth
+
+# --- Classical machine learning ----------------------------------------------
+scikit-learn>=1.3.0           # Pipeline, ColumnTransformer, LogReg, Tree, Forest
+xgboost>=2.0.0                # gradient boosting; the code falls back to
+                              #   sklearn's HistGradientBoostingClassifier if absent
+joblib>=1.3.0                 # model persistence
+
+# --- Statistics & fairness ----------------------------------------------------
+statsmodels>=0.14.0           # McNemar's test (with an exact-binomial fallback in-repo)
+fairlearn>=0.10.0             # demographic parity / equalized odds audit
+
+# --- Explainability -----------------------------------------------------------
+shap>=0.44.0                  # global + per-student feature attributions
+dice-ml>=0.11                 # counterfactual "what would need to change" engine
+
+# --- Visualisation ------------------------------------------------------------
+matplotlib>=3.7.0
+seaborn>=0.13.0
+plotly>=5.18.0                # interactive charts in the Streamlit dashboard
+
+# --- Dashboard ----------------------------------------------------------------
+streamlit>=1.30.0
+
+# --- API service --------------------------------------------------------------
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+
+# --- Report & deck generation -------------------------------------------------
+python-docx>=1.1.0            # generates reports/project_report.docx
+python-pptx>=0.6.23           # generates reports/presentation.pptx
+
+# --- Notebooks ----------------------------------------------------------------
+jupyter>=1.0.0
+notebook>=7.0.0
+ipykernel>=6.29.0
+
+# --- Testing & quality --------------------------------------------------------
+pytest>=7.4.0
+pytest-cov>=4.1.0
+httpx>=0.26.0                 # FastAPI TestClient transport
+
+# --- Optional: LLM narrative reports -----------------------------------------
+# Disabled by default (narrative.enabled: false in config/config.yaml). The
+# pipeline produces template-based narratives without it, so this is genuinely
+# optional — uncomment only if you set narrative.enabled: true and supply a key.
+# openai>=1.12.0
+python-dotenv>=1.0.0          # reads the API key from .env when narrative is on

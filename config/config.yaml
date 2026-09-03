@@ -1,0 +1,317 @@
+# =============================================================================
+# Student Performance Prediction System — central configuration
+# =============================================================================
+# Every path, hyperparameter grid, random seed and magic number lives here.
+# Nothing in src/ hardcodes any of these values. If you want to change how the
+# project behaves, you should only ever need to edit THIS file.
+# =============================================================================
+
+project:
+  name: "Student Performance Prediction System"
+  short_name: "SPPS"
+  author: "Satyam"
+  version: "1.0.0"
+  # One seed used everywhere (splits, model init, bootstrap, Monte Carlo) so
+  # every number in the report is exactly reproducible.
+  random_seed: 42
+
+paths:
+  # All paths are resolved relative to the PROJECT ROOT (the folder containing
+  # this config/ directory), never relative to the current working directory.
+  # This is what lets you run scripts from anywhere without breaking imports.
+  raw_data: "data/raw/xAPI-Edu-Data.csv"
+  processed_data: "data/processed/cleaned.csv"
+  processed_meta: "data/processed/schema_report.json"
+  model_dir: "models"
+  model_file: "models/model.joblib"
+  model_card: "models/model_card.json"
+  figures_dir: "reports/figures"
+  artifacts_dir: "reports/artifacts"
+  metrics_file: "reports/artifacts/metrics.json"
+  stats_file: "reports/artifacts/statistical_tests.json"
+  fairness_file: "reports/artifacts/fairness_audit.json"
+  simulation_file: "reports/artifacts/cohort_simulation.json"
+  shap_file: "reports/artifacts/shap_global.json"
+  counterfactual_file: "reports/artifacts/counterfactual_examples.json"
+
+data:
+  target: "Class"
+  # The dataset ships the target already as L/M/H — no post-hoc bucketing of a
+  # continuous grade is needed. This is the main reason we chose xAPI-Edu-Data.
+  target_classes: ["L", "M", "H"]           # semantic order: Low < Medium < High
+  target_labels:
+    L: "Low"
+    M: "Medium"
+    H: "High"
+
+  # --- Feature groups -------------------------------------------------------
+  # Behavioural engagement counters (0-100). These are the dataset's proxies for
+  # the "participation" and "study effort" factors the brief asks us to analyse.
+  numeric_features:
+    - raisedhands
+    - VisITedResources
+    - AnnouncementsView
+    - Discussion
+
+  # Unordered categories -> ONE-HOT encoded.
+  # Why one-hot: these have no natural ordering. Label-encoding them would let a
+  # linear model read "Kuwait=3 > Jordan=1" as a magnitude, which is nonsense.
+  nominal_features:
+    - gender
+    - NationalITy
+    - PlaceofBirth
+    - StageID
+    - GradeID
+    - SectionID
+    - Topic
+    - Semester
+    - Relation
+
+  # Two-level categories -> ORDINAL (binary) encoded with an explicit mapping.
+  # Why ordinal here: with exactly two levels, one-hot and binary encoding carry
+  # identical information, but binary keeps the feature space smaller and makes
+  # SHAP plots readable ("StudentAbsenceDays = 1" means "Above-7").
+  binary_features:
+    ParentAnsweringSurvey:   {"No": 0, "Yes": 1}
+    ParentschoolSatisfaction: {"Bad": 0, "Good": 1}
+    StudentAbsenceDays:      {"Under-7": 0, "Above-7": 1}   # 1 = worse attendance
+
+  # Columns the fairness audit inspects for systematic prediction skew.
+  sensitive_features:
+    - gender
+    - NationalITy
+
+  # Features a student/teacher could realistically change. The counterfactual
+  # engine is only allowed to vary these — it must never suggest changing
+  # gender, nationality or place of birth to improve a grade.
+  actionable_features:
+    - raisedhands
+    - VisITedResources
+    - AnnouncementsView
+    - Discussion
+    - StudentAbsenceDays
+    - ParentAnsweringSurvey
+
+  # Plain-English names used in the dashboard and report, so a teacher never
+  # sees a raw column name like "VisITedResources".
+  friendly_names:
+    raisedhands: "Hands raised in class"
+    VisITedResources: "Learning resources opened"
+    AnnouncementsView: "Announcements read"
+    Discussion: "Discussion posts"
+    StudentAbsenceDays: "Absence level"
+    ParentAnsweringSurvey: "Parent answered school survey"
+    ParentschoolSatisfaction: "Parent satisfaction with school"
+    gender: "Gender"
+    NationalITy: "Nationality"
+    PlaceofBirth: "Place of birth"
+    StageID: "School stage"
+    GradeID: "Grade"
+    SectionID: "Class section"
+    Topic: "Subject"
+    Semester: "Semester"
+    Relation: "Responsible parent"
+
+preprocess:
+  drop_exact_duplicates: true
+  # PlaceofBirth and NationalITy are ~99% collinear in this dataset. We keep
+  # both by default (dropping is a documented experiment, not a silent default).
+  drop_collinear_place_of_birth: false
+  missing_value_strategy:
+    numeric: "median"        # robust to the skew we see in engagement counters
+    categorical: "most_frequent"
+  scale_numeric: true        # StandardScaler; required by LogisticRegression,
+                             # monotonic-invariant (harmless) for tree models.
+
+split:
+  test_size: 0.20
+  stratify: true             # class balance is 44/30/26 — stratify or the small
+                             # L class gets under-represented in the test set.
+  shuffle: true
+
+cv:
+  n_splits: 5
+  strategy: "stratified_kfold"
+  scoring: "f1_macro"        # macro-F1, not accuracy: it weights the smaller
+                             # "Low" class equally, and Low students are exactly
+                             # the ones this system exists to catch.
+
+models:
+  # Trained in this order. Logistic Regression is the honest baseline: if a
+  # complex model can't beat it, the complexity isn't earning its keep.
+  logistic_regression:
+    enabled: true
+    params:
+      max_iter: 2000
+      multi_class: "auto"
+      class_weight: "balanced"
+  decision_tree:
+    enabled: true
+    params:
+      max_depth: 6
+      min_samples_leaf: 5
+      class_weight: "balanced"
+  random_forest:
+    enabled: true
+    params:
+      n_estimators: 400
+      max_depth: null
+      min_samples_leaf: 2
+      class_weight: "balanced"
+      n_jobs: -1
+  gradient_boosting:
+    enabled: true
+    backend: "xgboost"       # falls back to sklearn HistGradientBoosting if
+                             # xgboost is not installed (see train.py)
+    params:
+      n_estimators: 400
+      learning_rate: 0.08
+      max_depth: 4
+      subsample: 0.9
+      colsample_bytree: 0.9
+
+tuning:
+  enabled: true
+  search: "randomized"       # RandomizedSearchCV — with 480 rows an exhaustive
+                             # grid buys precision we can't statistically detect.
+  n_iter: 40
+  top_k_models: 2            # only the two best CV performers get tuned
+  grids:
+    random_forest:
+      n_estimators: [200, 300, 400, 600, 800]
+      max_depth: [null, 6, 8, 12, 16]
+      min_samples_leaf: [1, 2, 3, 5]
+      max_features: ["sqrt", "log2", 0.5]
+    gradient_boosting:
+      n_estimators: [200, 300, 400, 600]
+      learning_rate: [0.03, 0.05, 0.08, 0.12]
+      max_depth: [2, 3, 4, 5, 6]
+      subsample: [0.7, 0.8, 0.9, 1.0]
+      colsample_bytree: [0.7, 0.8, 0.9, 1.0]
+    decision_tree:
+      max_depth: [3, 4, 5, 6, 8, 10, null]
+      min_samples_leaf: [1, 2, 3, 5, 8]
+      criterion: ["gini", "entropy"]
+    logistic_regression:
+      C: [0.01, 0.1, 0.5, 1.0, 5.0, 10.0]
+      penalty: ["l2"]
+      solver: ["lbfgs"]
+
+evaluation:
+  bootstrap:
+    enabled: true
+    n_iterations: 2000       # 2000 resamples -> stable percentile CI bounds
+    confidence_level: 0.95
+  mcnemar:
+    enabled: true
+    exact: true              # exact binomial test; our discordant counts are
+                             # small (n=96 test set), so chi-square is unsafe.
+    alpha: 0.05
+  error_analysis:
+    enabled: true
+    top_n_misclassified: 15
+
+statistics:
+  alpha: 0.05
+  # Holm-Bonferroni correction: we run ~13 hypothesis tests, so uncorrected
+  # p-values would inflate the false-positive rate. Holm is uniformly more
+  # powerful than plain Bonferroni and just as easy to defend.
+  multiple_testing_correction: "holm"
+  anova:
+    check_assumptions: true  # Levene's test for equal variance; if violated we
+                             # report Kruskal-Wallis alongside the ANOVA.
+  effect_size:
+    report: true             # eta-squared for ANOVA, Cramer's V for chi-square.
+                             # A p-value says "real", an effect size says "big".
+
+explainability:
+  shap:
+    enabled: true
+    max_display: 15
+    background_samples: 100  # background set size for the SHAP explainer
+    plot_dpi: 150
+
+counterfactuals:
+  enabled: true
+  backend: "dice"            # dice-ml; falls back to built-in greedy search
+  total_cfs: 3               # how many alternative "what if" paths to generate
+  desired_class: "H"
+  method: "random"           # dice-ml method: random | genetic | kdtree
+  # Realism guardrails — a suggestion is useless if it isn't achievable.
+  max_relative_change: 0.60  # never suggest changing a counter by >60% of range
+  permitted_range:
+    raisedhands: [0, 100]
+    VisITedResources: [0, 100]
+    AnnouncementsView: [0, 100]
+    Discussion: [0, 100]
+
+fairness:
+  enabled: true
+  metrics:
+    - "demographic_parity_difference"
+    - "demographic_parity_ratio"
+    - "equalized_odds_difference"
+    - "selection_rate"
+  # A commonly cited rule of thumb (the "four-fifths rule"): a selection-rate
+  # ratio below 0.8 between groups is treated as evidence of disparate impact.
+  disparity_ratio_threshold: 0.80
+  disparity_difference_threshold: 0.10
+  min_group_size: 20         # groups smaller than this are reported but flagged
+                             # as statistically unreliable rather than acted on.
+
+simulation:
+  enabled: true
+  n_runs: 500                # Monte Carlo repetitions per intervention
+  noise_std_fraction: 0.10   # per-student response to an intervention is noisy;
+                             # we model it as a 10% std-dev around the target.
+  default_interventions:
+    raisedhands_pct: 15
+    VisITedResources_pct: 15
+    AnnouncementsView_pct: 0
+    Discussion_pct: 0
+    absence_reduction_pct: 0
+
+recommendations:
+  top_n_factors: 3           # how many SHAP drivers to turn into advice
+  min_shap_magnitude: 0.01   # ignore factors with negligible contribution
+
+narrative:
+  # OPTIONAL, OFF BY DEFAULT. Uses an LLM purely to phrase numbers we already
+  # computed (SHAP values, counterfactuals) as fluent prose. It performs no
+  # modelling, no inference and no learning — if disabled or if no API key is
+  # present, the system falls back to deterministic templates and behaves
+  # identically. See docs note in the report on why this stays within scope.
+  enabled: false
+  provider: "anthropic"
+  model: "claude-3-5-haiku-20241022"
+  api_key_env: "ANTHROPIC_API_KEY"
+  max_tokens: 400
+  timeout_seconds: 20
+
+dashboard:
+  title: "Student Performance Insights"
+  page_icon: "📘"
+  layout: "wide"
+  theme:
+    background: "#FFFFFF"
+    surface: "#FAFAFA"
+    accent: "#2563EB"
+    text: "#1F2937"
+    muted: "#6B7280"
+    border: "#E5E7EB"
+    # Soft, desaturated status colours — this is a student's academic standing,
+    # not an error state, so no alarm-red anywhere.
+    class_colors:
+      H: "#10B981"
+      M: "#F59E0B"
+      L: "#F87171"
+  show_advanced_by_default: false
+
+api:
+  title: "Student Performance Prediction API"
+  version: "1.0.0"
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["*"]
+  include_shap_in_response: true
+  shap_top_n: 5

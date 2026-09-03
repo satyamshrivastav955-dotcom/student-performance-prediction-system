@@ -1,0 +1,13 @@
+# Render deployment — FastAPI service
+# This file tells Render how to build and run the API.
+# Deploy at: https://dashboard.render.com → New → Web Service → Connect repo
+
+services:
+  - type: web
+    name: student-performance-api
+    runtime: python
+    buildCommand: "pip install -r requirements.txt && python scripts/run_pipeline.py --only data train"
+    startCommand: "uvicorn api.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
