@@ -29,7 +29,7 @@
   },
   "cross_validation": {
     "logistic_regression": {
-      "fit_seconds": 0.67,
+      "fit_seconds": 0.62,
       "n_splits": 5,
       "accuracy": {
         "mean": 0.7436,
@@ -98,7 +98,7 @@
       }
     },
     "decision_tree": {
-      "fit_seconds": 0.53,
+      "fit_seconds": 0.42,
       "n_splits": 5,
       "accuracy": {
         "mean": 0.6728,
@@ -167,7 +167,7 @@
       }
     },
     "random_forest": {
-      "fit_seconds": 9.26,
+      "fit_seconds": 7.53,
       "n_splits": 5,
       "accuracy": {
         "mean": 0.7489,
@@ -236,7 +236,7 @@
       }
     },
     "gradient_boosting": {
-      "fit_seconds": 6.79,
+      "fit_seconds": 6.98,
       "n_splits": 5,
       "accuracy": {
         "mean": 0.7249,
@@ -322,7 +322,7 @@
       },
       "best_cv_score": 0.7899,
       "n_candidates": 40,
-      "search_seconds": 365.2
+      "search_seconds": 598.0
     },
     "logistic_regression": {
       "tuned": true,
@@ -333,7 +333,7 @@
       },
       "best_cv_score": 0.7511,
       "n_candidates": 6,
-      "search_seconds": 5.8
+      "search_seconds": 7.8
     },
     "decision_tree": {
       "tuned": false
