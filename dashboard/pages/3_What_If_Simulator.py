@@ -27,14 +27,15 @@ from src.models.predict import model_is_available, predict_one
 from src.utils.config import load_config, class_label, friendly
 from theme import (
     inject_theme, page_hero, result_panel, probability_bar, delta_chip,
-    CLASS_COLORS, PLOTLY_BASE,
+    CLASS_COLORS, PLOTLY_BASE, PLOTLY_CONFIG,
     ACCENT, CHART_GRAY, CHART_DARK, INK, INK_SEC, INK_MUTED, BORDER,
 )
 
 st.set_page_config(
-    page_title="Try What-If Scenarios", page_icon="🔮", layout="wide"
+    page_title="Try What-If Scenarios", page_icon="🔮", layout="wide",
+    initial_sidebar_state="collapsed",
 )
-inject_theme()
+inject_theme(active_page="whatif")
 
 cfg = load_config()
 
@@ -254,7 +255,7 @@ with col_result:
             yaxis=dict(title="Probability (%)", range=[0, 110],
                        showgrid=True, gridcolor="#EBEBEA"),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
         st.markdown(
             '<p class="spps-chart-caption">Gray bars = original prediction. '
             'Dark/blue bars = what-if scenario.</p>',

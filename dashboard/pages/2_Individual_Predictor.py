@@ -28,14 +28,15 @@ from src.utils.config import load_config, class_label, friendly
 from theme import (
     inject_theme, page_hero, stat_card, result_panel,
     shap_narrative, cf_card, suggestion_card, probability_bar,
-    CLASS_COLORS, PLOTLY_BASE,
+    CLASS_COLORS, PLOTLY_BASE, PLOTLY_CONFIG,
     ACCENT, CHART_GRAY, CHART_DARK, INK, INK_SEC, INK_MUTED, BORDER, SURFACE,
 )
 
 st.set_page_config(
-    page_title="Predict for a Student", page_icon="🎯", layout="wide"
+    page_title="Predict for a Student", page_icon="🎯", layout="wide",
+    initial_sidebar_state="collapsed",
 )
-inject_theme()
+inject_theme(active_page="predictor")
 
 cfg = load_config()
 
@@ -215,85 +216,147 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
 
         contributions = explanation.get("contributions", [])
         if contributions:
-            top_n = min(8, len(contributions))
-            top   = contributions[:top_n]
+            # Narrative lead-in from the pre-split toward/against lists
+            toward  = [c["friendly_name"] for c in explanation.get("pushing_toward", [])][:2]
+            against = [c["friendly_name"] for c in explanation.get("pushing_against", [])][:2]
+            if toward:
+                st.markdown(shap_narrative(toward, direction="toward"), unsafe_allow_html=True)
+            elif against:
+                st.markdown(shap_narrative(against, direction="against"), unsafe_allow_html=True)
 
-            features = [
-                friendly(c.get("original_feature", c.get("feature", "")), cfg)
-                for c in reversed(top)
-            ]
-            values = [c.get("shap_value", 0) for c in reversed(top)]
+            base_val = explanation.get("base_value")
+            allc     = explanation.get("all_contributions") or contributions
 
-            # Color: accent for top positive, dark for top negative, gray for rest
-            max_pos = max((v for v in values if v > 0), default=0)
-            min_neg = min((v for v in values if v < 0), default=0)
-            colors  = []
-            for v in values:
-                if v > 0 and abs(v - max_pos) < 1e-9:
-                    colors.append(ACCENT)       # top positive → accent
-                elif v < 0 and abs(v - min_neg) < 1e-9:
-                    colors.append(CHART_DARK)   # top negative → dark
-                elif v > 0:
-                    colors.append("#8CAAD4")    # smaller positive → lighter accent
-                else:
-                    colors.append("#9C9C9A")    # smaller negative → mid gray
+            # ── Primary view: SHAP waterfall (base rate → factors → final) ──
+            waterfall_ok = False
+            if base_val is not None:
+                try:
+                    K = 7
+                    head      = allc[:K]
+                    other_sum = float(sum(c["shap"] for c in allc[K:]))
+                    total     = float(base_val) + float(sum(c["shap"] for c in allc))
 
-            # Narrative sentence (above chart)
-            top_feats_positive = [
-                friendly(c.get("original_feature", c.get("feature", "")), cfg)
-                for c in top[:3] if c.get("shap_value", 0) > 0
-            ]
-            top_feats_negative = [
-                friendly(c.get("original_feature", c.get("feature", "")), cfg)
-                for c in top[:3] if c.get("shap_value", 0) < 0
-            ]
+                    labels = ["Base rate"] + [c["friendly_name"] for c in head]
+                    meas   = ["absolute"]  + ["relative"] * len(head)
+                    xvals  = [float(base_val)] + [float(c["shap"]) for c in head]
+                    if abs(other_sum) > 1e-9:
+                        labels.append("Other features"); meas.append("relative"); xvals.append(other_sum)
+                    labels.append(f"P({predicted_label})"); meas.append("total"); xvals.append(total)
 
-            if top_feats_positive:
+                    # Reverse so the base rate sits at the top of the horizontal chart
+                    labels, meas, xvals = labels[::-1], meas[::-1], xvals[::-1]
+                    txt = [f"{xv:.3f}" if mv in ("absolute", "total") else f"{xv:+.3f}"
+                           for mv, xv in zip(meas, xvals)]
+
+                    figw = go.Figure(go.Waterfall(
+                        orientation="h", measure=meas, y=labels, x=xvals,
+                        text=txt, textposition="outside",
+                        connector={"line": {"color": BORDER, "width": 1}},
+                        increasing={"marker": {"color": ACCENT}},
+                        decreasing={"marker": {"color": CHART_DARK}},
+                        totals={"marker": {"color": INK}},
+                    ))
+                    figw.update_layout(
+                        **PLOTLY_BASE, showlegend=False,
+                        height=max(300, len(labels) * 42),
+                        margin=dict(t=20, b=40, l=170, r=80),
+                        xaxis=dict(title=f"Contribution to P({predicted_label})",
+                                   showgrid=True, gridcolor="#EBEBEA",
+                                   zeroline=True, zerolinecolor="#C8C8C6", zerolinewidth=1.5),
+                        yaxis=dict(showgrid=False, tickfont=dict(size=12)),
+                    )
+                    st.plotly_chart(figw, use_container_width=True, config=PLOTLY_CONFIG)
+                    st.markdown(
+                        '<p class="spps-chart-caption">A SHAP waterfall: starting from the average '
+                        'prediction (base rate), each factor pushes the probability of the '
+                        f'<strong>{predicted_label}</strong> band up (blue) or down (dark) until it '
+                        'reaches this student\'s final score.</p>',
+                        unsafe_allow_html=True,
+                    )
+                    waterfall_ok = True
+                except Exception:
+                    waterfall_ok = False
+
+            # ── Fallback: horizontal impact bar (also the correct 'shap' key) ──
+            if not waterfall_ok:
+                top      = contributions[:8]
+                features = [c["friendly_name"] for c in reversed(top)]
+                values   = [float(c["shap"]) for c in reversed(top)]
+                colors   = [ACCENT if v > 0 else CHART_DARK for v in values]
+                figb = go.Figure(go.Bar(
+                    y=features, x=values, orientation="h", marker_color=colors,
+                    text=[f"{v:+.3f}" for v in values], textposition="outside",
+                    textfont=dict(family="IBM Plex Mono, monospace", size=11),
+                ))
+                figb.update_layout(
+                    **PLOTLY_BASE, margin=dict(t=20, b=40, l=160, r=60),
+                    xaxis=dict(title="Impact on prediction", showgrid=True, gridcolor="#EBEBEA",
+                               zeroline=True, zerolinecolor="#C8C8C6", zerolinewidth=1.5),
+                    yaxis=dict(showgrid=False, tickfont=dict(size=12)),
+                    height=max(260, len(top) * 42),
+                )
+                st.plotly_chart(figb, use_container_width=True, config=PLOTLY_CONFIG)
                 st.markdown(
-                    shap_narrative(top_feats_positive[:2], direction="toward"),
+                    '<p class="spps-chart-caption">Blue pushes the prediction toward a higher '
+                    'band; dark bars pull it lower. The longer the bar, the stronger that '
+                    'factor\'s influence.</p>',
                     unsafe_allow_html=True,
                 )
-            elif top_feats_negative:
-                st.markdown(
-                    shap_narrative(top_feats_negative[:2], direction="against"),
-                    unsafe_allow_html=True,
-                )
 
-            fig = go.Figure(go.Bar(
-                y=features,
-                x=values,
-                orientation="h",
-                marker_color=colors,
-                text=[f"{v:+.3f}" for v in values],
-                textposition="outside",
-                textfont=dict(family="IBM Plex Mono, monospace", size=11),
-            ))
-            fig.update_layout(
-                **PLOTLY_BASE,
-                margin=dict(t=20, b=40, l=160, r=60),
-                xaxis=dict(
-                    title="Impact on prediction",
-                    showgrid=True, gridcolor="#EBEBEA",
-                    zeroline=True, zerolinecolor="#C8C8C6", zerolinewidth=1.5,
-                ),
-                yaxis=dict(showgrid=False, tickfont=dict(size=12)),
-                height=max(260, top_n * 42),
-            )
-            st.plotly_chart(fig, use_container_width=True)
-            st.markdown(
-                '<p class="spps-chart-caption">Blue pushes the prediction '
-                'toward a higher band; dark bars pull it lower. The longer '
-                'the bar, the stronger that factor\'s influence.</p>',
-                unsafe_allow_html=True,
-            )
-
-            if explanation.get("narrative"):
+            # Plain-terms narrative (correct key is 'summary')
+            if explanation.get("summary"):
                 st.markdown(
                     f'<p style="font-size:0.9rem;color:var(--ink-sec);">'
-                    f'<strong>In plain terms:</strong> {explanation["narrative"]}'
+                    f'<strong>In plain terms:</strong> {explanation["summary"]}'
                     f'</p>',
                     unsafe_allow_html=True,
                 )
+
+            # ── Student-vs-class radar ──
+            numf = cfg["data"]["numeric_features"]
+            try:
+                stu_vals = [float(student_data.get(f, 0)) for f in numf]
+                hi_avg = df[df["Class"] == "H"][numf].mean().reindex(numf).tolist()
+                lo_avg = df[df["Class"] == "L"][numf].mean().reindex(numf).tolist()
+                cats   = [friendly(f, cfg) for f in numf]
+
+                def _loop(seq):
+                    seq = list(seq)
+                    return seq + [seq[0]]
+
+                st.markdown(
+                    '<p class="spps-stat-card-label" style="margin-top:1.5rem;">'
+                    'This student vs class averages</p>',
+                    unsafe_allow_html=True,
+                )
+                figr = go.Figure()
+                figr.add_trace(go.Scatterpolar(
+                    r=_loop(lo_avg), theta=_loop(cats), name="Low-band avg",
+                    line_color=CHART_DARK, fill="toself", opacity=0.25))
+                figr.add_trace(go.Scatterpolar(
+                    r=_loop(hi_avg), theta=_loop(cats), name="High-band avg",
+                    line_color=CHART_GRAY, fill="toself", opacity=0.25))
+                figr.add_trace(go.Scatterpolar(
+                    r=_loop(stu_vals), theta=_loop(cats), name="This student",
+                    line_color=ACCENT, fill="toself", opacity=0.5))
+                figr.update_layout(
+                    **PLOTLY_BASE, height=400, margin=dict(t=30, b=40, l=40, r=40),
+                    polar=dict(
+                        radialaxis=dict(range=[0, 100], showline=False,
+                                        gridcolor="#EBEBEA", tickfont=dict(size=10)),
+                        angularaxis=dict(tickfont=dict(size=11)),
+                        bgcolor="rgba(0,0,0,0)",
+                    ),
+                )
+                st.plotly_chart(figr, use_container_width=True, config=PLOTLY_CONFIG)
+                st.markdown(
+                    '<p class="spps-chart-caption">Where this student\'s engagement sits relative '
+                    'to the typical High-band and Low-band student. The closer the blue shape hugs '
+                    'the High outline, the stronger the engagement profile.</p>',
+                    unsafe_allow_html=True,
+                )
+            except Exception:
+                pass
 
     except Exception as e:
         st.warning(f"Could not generate SHAP explanation: {e}")
@@ -371,3 +434,88 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
     # Advanced details
     with st.expander("Advanced: Raw prediction data"):
         st.json(prediction)
+
+
+st.divider()
+
+# ---------------------------------------------------------------------------
+# Compare two students side by side
+# ---------------------------------------------------------------------------
+st.markdown(
+    '<p class="spps-section-label">Compare Two Students</p>',
+    unsafe_allow_html=True,
+)
+st.caption(
+    "Pick any two students to see their predictions next to each other — useful "
+    "for understanding why two similar-looking students land in different bands."
+)
+
+
+def _record(i: int) -> dict:
+    r = df.iloc[i]
+    return {
+        c: (int(r[c]) if c in cfg["data"]["numeric_features"] else str(r[c]))
+        for c in feature_columns(cfg)
+    }
+
+
+cmp_a, cmp_b = st.columns(2)
+with cmp_a:
+    idx_a = st.selectbox(
+        "Student A", range(len(df)),
+        format_func=lambda i: f"Student {i+1} (actual: {df.iloc[i]['Class']})",
+        key="cmp_a",
+    )
+with cmp_b:
+    idx_b = st.selectbox(
+        "Student B", range(len(df)),
+        index=min(1, len(df) - 1),
+        format_func=lambda i: f"Student {i+1} (actual: {df.iloc[i]['Class']})",
+        key="cmp_b",
+    )
+
+if st.button("Compare", key="cmp_btn", use_container_width=True):
+    try:
+        pa = predict_one(_record(idx_a), cfg=cfg)
+        pb = predict_one(_record(idx_b), cfg=cfg)
+    except Exception as e:
+        st.error(f"Comparison failed: {e}")
+    else:
+        numf = cfg["data"]["numeric_features"]
+        ca, cb = st.columns(2)
+        for col, idx, pred in [(ca, idx_a, pa), (cb, idx_b, pb)]:
+            with col:
+                st.markdown(
+                    result_panel(pred["predicted_class"], pred["predicted_label"],
+                                 pred.get("confidence", 0)),
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    f'<p class="spps-stat-card-label" style="margin-top:0.75rem;">'
+                    f'Student {idx+1} · actual {df.iloc[idx]["Class"]}</p>',
+                    unsafe_allow_html=True,
+                )
+                probs = pred.get("probabilities", {})
+                if probs:
+                    st.markdown(probability_bar(probs, pred["predicted_class"]),
+                                unsafe_allow_html=True)
+
+        # Engagement comparison
+        cats = [friendly(f, cfg) for f in numf]
+        va = [int(df.iloc[idx_a][f]) for f in numf]
+        vb = [int(df.iloc[idx_b][f]) for f in numf]
+        figc = go.Figure()
+        figc.add_trace(go.Bar(name=f"Student {idx_a+1}", x=cats, y=va, marker_color=ACCENT))
+        figc.add_trace(go.Bar(name=f"Student {idx_b+1}", x=cats, y=vb,
+                              marker_color=CHART_DARK, opacity=0.7))
+        figc.update_layout(
+            **PLOTLY_BASE, barmode="group", height=320, margin=dict(t=20, b=40, l=8, r=8),
+            yaxis=dict(title="Engagement score", range=[0, 100],
+                       showgrid=True, gridcolor="#EBEBEA"),
+        )
+        st.plotly_chart(figc, use_container_width=True, config=PLOTLY_CONFIG)
+        st.markdown(
+            '<p class="spps-chart-caption">Side-by-side engagement metrics for the two '
+            'selected students — the visual root of any difference in their predicted bands.</p>',
+            unsafe_allow_html=True,
+        )

@@ -26,14 +26,15 @@ from src.models.predict import model_is_available
 from src.utils.config import load_config, class_label, friendly
 from theme import (
     inject_theme, page_hero, stat_card, section_heading, delta_chip,
-    CLASS_COLORS, PLOTLY_BASE,
+    CLASS_COLORS, PLOTLY_BASE, PLOTLY_CONFIG,
     ACCENT, CHART_GRAY, CHART_DARK, INK, INK_SEC, INK_MUTED, BORDER, SURFACE,
 )
 
 st.set_page_config(
-    page_title="Simulate the Whole Class", page_icon="🏫", layout="wide"
+    page_title="Simulate the Whole Class", page_icon="🏫", layout="wide",
+    initial_sidebar_state="collapsed",
 )
-inject_theme()
+inject_theme(active_page="cohort")
 
 cfg = load_config()
 
@@ -102,7 +103,7 @@ with col_info:
 
     if changes:
         for name, val in changes:
-            chip = delta_chip(val, prefix="+")
+            chip = delta_chip(val, suffix="%")
             st.markdown(
                 f'<p style="font-size:0.875rem;margin:0.3rem 0;color:var(--ink-sec);">'
                 f'<strong style="color:var(--ink);">{name}</strong>: {chip}</p>',
@@ -257,7 +258,7 @@ if st.button("Run Simulation", type="primary", use_container_width=True):
             showgrid=True, gridcolor="#EBEBEA",
         ),
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
         '<p class="spps-chart-caption">Gray bars = current class distribution. '
         'Colored bars = simulated distribution after the intervention. '
