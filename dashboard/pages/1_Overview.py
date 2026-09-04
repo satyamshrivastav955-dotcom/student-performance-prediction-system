@@ -22,17 +22,17 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
-from src.data.preprocess import load_processed
+from src.data.preprocess import load_processed, feature_columns
+from src.models.predict import model_is_available, predict_batch
 from src.utils.config import load_config, class_label, friendly
 from theme import (
-    inject_theme, page_hero, hero_stat, stat_card,
-    class_breakdown_bars, section_heading,
-    ACCENT, CHART_GRAY, CHART_DARK, CLASS_COLORS, PLOTLY_BASE,
+    inject_theme, page_hero, kpi_hero_row, section_heading, probability_bar,
+    ACCENT, CHART_GRAY, CHART_DARK, CLASS_COLORS, PLOTLY_BASE, PLOTLY_CONFIG,
     INK, INK_SEC, INK_MUTED, BORDER, SURFACE,
 )
 
-st.set_page_config(page_title="Overview", page_icon="📊", layout="wide")
-inject_theme()
+st.set_page_config(page_title="Overview", page_icon="📊", layout="wide", initial_sidebar_state="collapsed")
+inject_theme(active_page="overview")
 
 cfg = load_config()
 
@@ -44,6 +44,28 @@ def load_data():
     return load_processed()
 
 df = load_data()
+
+
+@st.cache_data(show_spinner=False)
+def load_risk_view():
+    """Score every student with the trained model and build a risk-ranked view.
+
+    Risk score = the model's predicted probability of the Low band. Ranking the
+    whole class by it turns the model into a triage list a teacher can act on.
+    """
+    feats = feature_columns(cfg)
+    preds = predict_batch(df[feats], cfg=cfg).reset_index(drop=True)
+    base  = df.reset_index(drop=True).copy()
+    base.insert(0, "Student", base.index + 1)
+    base["Actual"]      = base["Class"].map(lambda c: class_label(c, cfg))
+    base["Predicted"]   = preds["predicted_label"]
+    base["_pred"]       = preds["predicted_class"]
+    base["risk"]        = preds["prob_L"]
+    base["P(Low)%"]     = (preds["prob_L"] * 100).round(1)
+    base["P(Med)%"]     = (preds["prob_M"] * 100).round(1)
+    base["P(High)%"]    = (preds["prob_H"] * 100).round(1)
+    base["Confidence%"] = (preds["confidence"] * 100).round(1)
+    return base.sort_values("risk", ascending=False).reset_index(drop=True)
 
 # ---------------------------------------------------------------------------
 # Page hero
@@ -65,30 +87,17 @@ n_features = (
 majority_class = df["Class"].value_counts().idxmax()
 majority_label = class_label(majority_class, cfg)
 
-# Hero: total students as the headline editorial number
-st.markdown(hero_stat(
-    value=f"{n_students:,}",
-    label="Students in dataset",
-    note=(
-        "xAPI-Edu-Data — real engagement data from a learning management system. "
-        "Three performance bands: High, Medium, and Low."
-    ),
-), unsafe_allow_html=True)
+class_counts = df["Class"].value_counts()
+n_high = class_counts.get("H", 0)
+n_medium = class_counts.get("M", 0)
+n_low = class_counts.get("L", 0)
 
-# Supporting stats in a 3-column row
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.markdown(stat_card("Input features", str(n_features),
-                           "Engagement counters + demographics", delay=1),
-                unsafe_allow_html=True)
-with c2:
-    st.markdown(stat_card("Performance classes", "3",
-                           "High · Medium · Low", delay=2),
-                unsafe_allow_html=True)
-with c3:
-    st.markdown(stat_card("Majority class", majority_label,
-                           "Largest group in the dataset", delay=3),
-                unsafe_allow_html=True)
+st.markdown(kpi_hero_row([
+    {"icon": "🎓", "value": str(n_students), "label": "Total Students", "trend": "xAPI-Edu-Data"},
+    {"icon": "🌟", "value": str(n_high), "label": "High Performers", "blue": True, "trend": f"{n_high/n_students:.1%} of total"},
+    {"icon": "📈", "value": str(n_medium), "label": "Medium Performers", "trend": f"{n_medium/n_students:.1%} of total"},
+    {"icon": "⚠️", "value": str(n_low), "label": "Low Performers", "trend": f"{n_low/n_students:.1%} of total"},
+]), unsafe_allow_html=True)
 
 st.divider()
 
@@ -120,7 +129,7 @@ with col_chart:
                    tickfont=dict(size=12), linecolor="rgba(0,0,0,0)"),
         height=320,
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
         '<p class="spps-chart-caption">The dataset has an uneven class distribution: '
         'Medium is the largest group, followed by High and Low. This is why we use '
@@ -135,11 +144,99 @@ with col_stats:
         unsafe_allow_html=True,
     )
     st.markdown(
-        class_breakdown_bars(class_counts_dict, n_students),
+        probability_bar({k: v/n_students for k, v in class_counts_dict.items()}, ""),
         unsafe_allow_html=True,
     )
 
 st.divider()
+
+# ---------------------------------------------------------------------------
+# Students who need attention (model-driven triage list)
+# ---------------------------------------------------------------------------
+if model_is_available():
+    st.markdown(section_heading(
+        "Students Who Need Attention",
+        "Every student scored by the trained model and ranked by risk — the "
+        "predicted probability of landing in the Low band. This is the model as a "
+        "triage tool, not just a describer."
+    ), unsafe_allow_html=True)
+
+    try:
+        risk_view = load_risk_view()
+        n_pred_low = int((risk_view["_pred"] == "L").sum())
+        watch = risk_view[(risk_view["_pred"] == "M") & (risk_view["risk"] >= 0.30)]
+        n_watch = int(len(watch))
+
+        c1, c2, c3 = st.columns(3)
+        c1.markdown(
+            f'<div style="background:var(--surface);border:1px solid var(--border);'
+            f'border-left:4px solid {CLASS_COLORS["L"]};border-radius:var(--radius);'
+            f'padding:1rem 1.2rem;"><p style="font-family:var(--font-display);font-size:1.7rem;'
+            f'font-weight:800;color:var(--ink);margin:0;">{n_pred_low}</p>'
+            f'<p style="font-size:0.72rem;color:var(--ink-muted);text-transform:uppercase;'
+            f'letter-spacing:0.06em;margin:0.2rem 0 0;">Predicted Low</p></div>',
+            unsafe_allow_html=True,
+        )
+        c2.markdown(
+            f'<div style="background:var(--surface);border:1px solid var(--border);'
+            f'border-left:4px solid {CLASS_COLORS["M"]};border-radius:var(--radius);'
+            f'padding:1rem 1.2rem;"><p style="font-family:var(--font-display);font-size:1.7rem;'
+            f'font-weight:800;color:var(--ink);margin:0;">{n_watch}</p>'
+            f'<p style="font-size:0.72rem;color:var(--ink-muted);text-transform:uppercase;'
+            f'letter-spacing:0.06em;margin:0.2rem 0 0;">Borderline (watch)</p></div>',
+            unsafe_allow_html=True,
+        )
+        c3.markdown(
+            f'<div style="background:var(--surface);border:1px solid var(--border);'
+            f'border-left:4px solid {ACCENT};border-radius:var(--radius);'
+            f'padding:1rem 1.2rem;"><p style="font-family:var(--font-display);font-size:1.7rem;'
+            f'font-weight:800;color:var(--ink);margin:0;">{n_students}</p>'
+            f'<p style="font-size:0.72rem;color:var(--ink-muted);text-transform:uppercase;'
+            f'letter-spacing:0.06em;margin:0.2rem 0 0;">Total scored</p></div>',
+            unsafe_allow_html=True,
+        )
+
+        top_n = st.slider("How many students to show", 5, 40, 15, step=5, key="risk_top_n")
+        table_cols = ["Student", "Topic", "Actual", "Predicted",
+                      "P(Low)%", "P(High)%", "raisedhands", "VisITedResources",
+                      "StudentAbsenceDays"]
+        rename_map = {
+            "raisedhands": friendly("raisedhands", cfg),
+            "VisITedResources": friendly("VisITedResources", cfg),
+            "StudentAbsenceDays": friendly("StudentAbsenceDays", cfg),
+        }
+        shown = risk_view.head(top_n)[table_cols].rename(columns=rename_map)
+
+        def _flag_low(row):
+            if row["Predicted"] == class_label("L", cfg):
+                return ["background-color: rgba(31,41,55,0.06)"] * len(row)
+            return [""] * len(row)
+
+        try:
+            styled = shown.style.apply(_flag_low, axis=1).format({"P(Low)%": "{:.1f}", "P(High)%": "{:.1f}"})
+            st.dataframe(styled, use_container_width=True, hide_index=True)
+        except Exception:
+            st.dataframe(shown, use_container_width=True, hide_index=True)
+
+        st.markdown(
+            '<p class="spps-chart-caption">Ranked by the model\'s predicted probability of '
+            'the Low band. Shaded rows are students the model actually predicts as Low; the '
+            'rest are the next most at-risk. Download the full ranked list below to act on it '
+            'outside the dashboard.</p>',
+            unsafe_allow_html=True,
+        )
+
+        export_cols = ["Student", "Topic", "Actual", "Predicted",
+                       "P(Low)%", "P(Med)%", "P(High)%", "Confidence%"]
+        csv = risk_view[export_cols].to_csv(index=False).encode("utf-8")
+        st.download_button(
+            "⬇ Download full risk-ranked list (CSV)",
+            data=csv, file_name="student_risk_ranking.csv", mime="text/csv",
+        )
+    except Exception as e:
+        st.info(f"Risk ranking unavailable: {e}")
+
+    st.divider()
 
 # ---------------------------------------------------------------------------
 # Engagement metrics by performance band
@@ -167,7 +264,7 @@ fig.update_layout(
     yaxis=dict(title="Average score", showgrid=True, gridcolor="#EBEBEA",
                tickfont=dict(size=12), linecolor="rgba(0,0,0,0)"),
 )
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
 st.markdown(
     '<p class="spps-chart-caption">High-performing students consistently show '
     'higher engagement across all four behavioural metrics. The gap is largest '
@@ -209,7 +306,7 @@ with col_abs1:
         xaxis=dict(title="Absence level", showgrid=False),
         yaxis=dict(title="% of students", showgrid=True, gridcolor="#EBEBEA"),
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
         '<p class="spps-chart-caption">Students with fewer than 7 days absent are far '
         'more likely to be predicted High. Attendance is one of the most reliable '
@@ -241,7 +338,7 @@ with col_abs2:
         xaxis=dict(title="Parent answered survey", showgrid=False),
         yaxis=dict(title="% of students", showgrid=True, gridcolor="#EBEBEA"),
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
         '<p class="spps-chart-caption">Parent engagement with school surveys is strongly '
         'associated with better student outcomes. When parents participate, their children '
@@ -279,7 +376,7 @@ fig.update_layout(
     xaxis=dict(title="% of students", showgrid=True, gridcolor="#EBEBEA"),
     yaxis=dict(showgrid=False, tickfont=dict(size=11)),
 )
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
 st.markdown(
     '<p class="spps-chart-caption">Some subjects have a higher proportion of '
     'Low-performing students than others. This may reflect differences in the '
@@ -288,9 +385,56 @@ st.markdown(
 )
 
 # ---------------------------------------------------------------------------
+# Subject leaderboard (model-driven at-risk ranking)
+# ---------------------------------------------------------------------------
+if model_is_available():
+    try:
+        rv = load_risk_view()
+        lb = rv.groupby("Topic").agg(
+            Students=("Student", "size"),
+            AtRisk=("_pred", lambda s: int((s == "L").sum())),
+            AvgRisk=("risk", "mean"),
+        ).reset_index()
+        lb["At-Risk %"]  = (lb["AtRisk"] / lb["Students"] * 100).round(1)
+        lb["Avg P(Low)%"] = (lb["AvgRisk"] * 100).round(1)
+        lb = lb.sort_values("At-Risk %", ascending=False).reset_index(drop=True)
+        lb_display = lb[["Topic", "Students", "AtRisk", "At-Risk %", "Avg P(Low)%"]].rename(
+            columns={"AtRisk": "Predicted Low"}
+        )
+
+        st.markdown(
+            '<p class="spps-stat-card-label" style="margin-top:1.5rem;">'
+            'Subject leaderboard — which subjects carry the most model-flagged risk</p>',
+            unsafe_allow_html=True,
+        )
+        try:
+            lb_styled = lb_display.style.background_gradient(
+                subset=["At-Risk %"], cmap="Blues"
+            ).format({"At-Risk %": "{:.1f}", "Avg P(Low)%": "{:.1f}"})
+            st.dataframe(lb_styled, use_container_width=True, hide_index=True)
+        except Exception:
+            st.dataframe(lb_display, use_container_width=True, hide_index=True)
+
+        st.markdown(
+            '<p class="spps-chart-caption">Unlike the chart above (which shows actual '
+            'recorded bands), this ranks subjects by the share of students the <em>model</em> '
+            'predicts as Low — useful for deciding where to concentrate support. Subjects with '
+            'few students will have noisier rates.</p>',
+            unsafe_allow_html=True,
+        )
+        st.download_button(
+            "⬇ Download subject leaderboard (CSV)",
+            data=lb_display.to_csv(index=False).encode("utf-8"),
+            file_name="subject_leaderboard.csv", mime="text/csv",
+        )
+    except Exception as e:
+        st.info(f"Subject leaderboard unavailable: {e}")
+
+# ---------------------------------------------------------------------------
 # Advanced: correlation heatmap
 # ---------------------------------------------------------------------------
 with st.expander("Advanced: Correlation Matrix"):
+    numeric_features = cfg["data"]["numeric_features"]
     numeric_df = df[numeric_features].copy()
     corr = numeric_df.corr()
 
@@ -311,7 +455,7 @@ with st.expander("Advanced: Correlation Matrix"):
         height=380,
         coloraxis_colorbar=dict(tickfont=dict(size=11)),
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
         '<p class="spps-chart-caption">Correlation between engagement features. '
         'Hands raised and resource visits are moderately correlated; '
