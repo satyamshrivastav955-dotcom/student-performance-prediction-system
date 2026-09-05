@@ -42,7 +42,7 @@ from theme import (
 )
 
 st.set_page_config(
-    page_title="Model & Fairness", page_icon="⚖️", layout="wide",
+    page_title="Model & Fairness — The Archive", page_icon=None, layout="wide",
     initial_sidebar_state="collapsed",
 )
 inject_theme(active_page="models")
@@ -69,14 +69,13 @@ metrics  = _load("metrics.json")
 fairness = _load("fairness_audit.json")
 
 st.markdown(page_hero(
-    "Model Comparison & Fairness Audit",
-    "The evidence behind the dashboard: how four classical models compare on the "
-    "held-out test set, how much to trust the gap between them, and what a formal "
-    "fairness audit found."
+    "The Archive of Proof",
+    "How four classical models were tried, how the victor was proven, where it errs, "
+    "and what the fairness audit found — the full evidence, bound in one volume."
 ), unsafe_allow_html=True)
 
 if not metrics:
-    st.error("⚠️ metrics.json not found. Run `python scripts/run_pipeline.py` first.")
+    st.error("metrics.json not found. Run `python scripts/run_pipeline.py` first.")
     st.stop()
 
 MODEL_NAMES = {
@@ -109,13 +108,13 @@ fair_verdict = (fairness or {}).get("overall_verdict", {}).get("verdict", "n/a")
 fair_flags = len((fairness or {}).get("overall_verdict", {}).get("flags", []))
 
 st.markdown(kpi_hero_row([
-    {"icon": "🏆", "value": MODEL_NAMES.get(best_key, best_key).split()[0],
+    {"icon": "seal", "value": MODEL_NAMES.get(best_key, best_key).split()[0],
      "label": "Best Model", "trend": f"tuned · {n_models} models compared", "blue": True},
-    {"icon": "🎯", "value": f"{best_eval.get('accuracy', 0):.1%}",
+    {"icon": "target", "value": f"{best_eval.get('accuracy', 0):.1%}",
      "label": "Test Accuracy", "trend": f"held-out · n={best_eval.get('n_test', '—')}", "blue": True},
-    {"icon": "📐", "value": f"{best_eval.get('f1_macro', 0):.3f}",
+    {"icon": "ledger", "value": f"{best_eval.get('f1_macro', 0):.3f}",
      "label": "Macro F1-Score", "trend": f"ROC-AUC {best_eval.get('roc_auc_ovr', 0):.3f}"},
-    {"icon": "⚖️", "value": fair_verdict.title(),
+    {"icon": "scales", "value": fair_verdict.title(),
      "label": "Fairness Verdict", "trend": f"{fair_flags} flag(s) · fairlearn"},
 ]), unsafe_allow_html=True)
 
@@ -136,7 +135,7 @@ for k in ranking:
     cvm = cv.get(k, {}).get("f1_macro", {})
     is_best = (k == best_key)
     rows.append({
-        "Model":         ("🏆 " if is_best else "") + MODEL_NAMES.get(k, k),
+        "Model":         ("★ " if is_best else "") + MODEL_NAMES.get(k, k),
         "Accuracy":      te.get("accuracy", np.nan),
         "Balanced Acc.": te.get("balanced_accuracy", np.nan),
         "Macro-F1":      te.get("f1_macro", np.nan),
@@ -155,8 +154,8 @@ _fmt = {
 
 
 def _highlight_best(row):
-    if str(row["Model"]).startswith("🏆"):
-        return ["background-color: rgba(37,99,235,0.09); font-weight: 700; color: #0D0D0D"] * len(row)
+    if str(row["Model"]).startswith("★"):
+        return ["background-color: rgba(154,123,46,0.10); font-weight: 700; color: #1C1917"] * len(row)
     return [""] * len(row)
 
 
@@ -168,9 +167,9 @@ except Exception:
     st.dataframe(df_lead, use_container_width=True, hide_index=True)
 
 _csv_lead = df_lead.copy()
-_csv_lead["Model"] = _csv_lead["Model"].str.replace("🏆 ", "", regex=False)
+_csv_lead["Model"] = _csv_lead["Model"].str.replace("★ ", "", regex=False)
 st.download_button(
-    "⬇ Download model comparison (CSV)",
+    "Download model comparison (CSV)",
     _csv_lead.to_csv(index=False).encode("utf-8"),
     file_name="model_comparison.csv",
     mime="text/csv",
@@ -203,7 +202,7 @@ fig = go.Figure(go.Bar(
 fig.update_layout(
     **PLOTLY_BASE, showlegend=False, height=320,
     margin=dict(t=20, b=40, l=8, r=8),
-    yaxis=dict(title="Macro-F1", range=[0, 1.0], showgrid=True, gridcolor="#EBEBEA"),
+    yaxis=dict(title="Macro-F1", range=[0, 1.0], showgrid=True, gridcolor="#E7E0D1"),
 )
 st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
 
@@ -239,7 +238,7 @@ if boot_models:
     fig.update_layout(
         **PLOTLY_BASE, height=230, margin=dict(t=20, b=40, l=10, r=90),
         xaxis=dict(title="Macro-F1 (95% bootstrap CI)", range=[0, 1.05],
-                   showgrid=True, gridcolor="#EBEBEA"),
+                   showgrid=True, gridcolor="#E7E0D1"),
     )
     st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
@@ -282,7 +281,7 @@ if mcnemar:
     p_str = f"{p_val:.4f}" if isinstance(p_val, (int, float)) else "—"
     st.markdown(
         f'<div class="spps-narrative" style="margin-top:1rem;">'
-        f'📌 The difference between the two models is <strong>{verdict_txt}</strong> '
+        f'The difference between the two models is <strong>{verdict_txt}</strong> '
         f'(p = {p_str}, α = {mcnemar.get("alpha", 0.05)}). '
         f'{mcnemar.get("interpretation", "")}</div>',
         unsafe_allow_html=True,
@@ -321,7 +320,7 @@ fig.add_trace(go.Bar(
 ))
 fig.update_layout(
     **PLOTLY_BASE, barmode="group", height=340, margin=dict(t=20, b=60, l=8, r=8),
-    yaxis=dict(title="Macro-F1", range=[0, 1.05], showgrid=True, gridcolor="#EBEBEA"),
+    yaxis=dict(title="Macro-F1", range=[0, 1.05], showgrid=True, gridcolor="#E7E0D1"),
 )
 st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
 
@@ -368,7 +367,7 @@ with col_cm:
         disp = [class_label(l, cfg) for l in labels]
         fig = px.imshow(
             cm, x=disp, y=disp, text_auto=True, aspect="auto",
-            color_continuous_scale=[[0.0, "#F7F7F5"], [1.0, ACCENT]],
+            color_continuous_scale=[[0.0, "#FAF8F3"], [1.0, ACCENT]],
             labels=dict(x="Predicted", y="Actual", color="Students"),
         )
         fig.update_layout(
@@ -420,7 +419,7 @@ if err:
     severe  = err.get("severe_errors_low_vs_high", 0)
     st.markdown(
         f'<div class="spps-narrative" style="margin-top:1.25rem;">'
-        f'📌 Of {n_test} test students, <strong>{n_mis}</strong> are misclassified '
+        f'Of {n_test} test students, <strong>{n_mis}</strong> are misclassified '
         f'({err.get("error_rate", 0):.1%}). Every one of them is an '
         f'<strong>adjacent-band</strong> error ({adj}/{n_mis}) — Low↔Medium or Medium↔High. '
         f'There are <strong>{severe}</strong> severe errors (a Low student called High, or vice-versa), '
@@ -451,9 +450,9 @@ if not fairness:
 else:
     ov = fairness.get("overall_verdict", {})
     verdict = ov.get("verdict", "n/a")
-    v_color = {"acceptable": ACCENT, "concern": "#B45309", "fail": "#B91C1C"}.get(verdict, INK_MUTED)
-    v_bg    = {"acceptable": "rgba(37,99,235,0.06)", "concern": "rgba(180,83,9,0.07)",
-               "fail": "rgba(185,28,28,0.07)"}.get(verdict, "#F9FAFB")
+    v_color = {"acceptable": ACCENT, "concern": "#8A6D1B", "fail": "#7C2D12"}.get(verdict, INK_MUTED)
+    v_bg    = {"acceptable": "rgba(35,68,52,0.06)", "concern": "rgba(138,109,27,0.07)",
+               "fail": "rgba(124,45,18,0.07)"}.get(verdict, "#F5F0E6")
     st.markdown(
         f'<div style="background:{v_bg};border:1px solid {v_color}33;'
         f'border-left:4px solid {v_color};border-radius:var(--radius);padding:1.1rem 1.35rem;margin-bottom:1rem;">'
@@ -467,8 +466,8 @@ else:
     # In-sample caveat — the audit runs on the full dataset, not the test split
     n_fair = fairness.get("n_students", dataset.get("n_total", "all"))
     st.markdown(
-        f'<p class="spps-chart-caption" style="margin-bottom:1.25rem;">'
-        f'ℹ️ The audit is computed across all {n_fair} students (not just the 96-student test set) '
+        f'<p class="spps-chart-caption">'
+        f'ℹ The audit is computed across all {n_fair} students (not just the 96-student test set) '
         f'so each subgroup has enough samples to measure. Its per-group accuracy figures are therefore '
         f'<strong>in-sample and optimistic</strong> — the model\'s true generalisation accuracy is '
         f'{best_eval.get("accuracy", 0):.1%} on held-out data (see the leaderboard above). '
@@ -488,7 +487,7 @@ else:
         interp = a.get("interpretation", {})
         m = a.get("metrics", {})
         av = interp.get("verdict", "n/a")
-        a_color = {"acceptable": ACCENT, "concern": "#B45309", "fail": "#B91C1C"}.get(av, INK_MUTED)
+        a_color = {"acceptable": ACCENT, "concern": "#8A6D1B", "fail": "#7C2D12"}.get(av, INK_MUTED)
         dp_ratio = m.get("demographic_parity_ratio", None)
         dp_diff  = m.get("demographic_parity_difference", None)
         dp_ratio_s = f"{dp_ratio:.2f}" if isinstance(dp_ratio, (int, float)) else "—"
@@ -540,7 +539,7 @@ else:
             items = sorted(sel.items(), key=lambda kv: kv[1])
             ylab  = [f"{g}  (n={sizes.get(g, '?')})" for g, _ in items]
             xval  = [v * 100 for _, v in items]
-            cols  = [ACCENT if sizes.get(g, 0) >= min_size else "#D1D5DB" for g, _ in items]
+            cols  = [ACCENT if sizes.get(g, 0) >= min_size else "#D6CFC0" for g, _ in items]
             fig = go.Figure(go.Bar(
                 y=ylab, x=xval, orientation="h", marker_color=cols,
                 text=[f"{v:.0f}%" for v in xval], textposition="outside",
@@ -551,14 +550,14 @@ else:
                 margin=dict(t=10, b=40, l=140, r=40), showlegend=False,
                 xaxis=dict(title="Selection rate — % predicted into the top band",
                            range=[0, max(xval) * 1.25 if xval else 100],
-                           showgrid=True, gridcolor="#EBEBEA"),
+                           showgrid=True, gridcolor="#E7E0D1"),
                 yaxis=dict(showgrid=False, tickfont=dict(size=10)),
             )
             st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
             caveat = a.get("group_info", {}).get("caveat")
             if caveat:
                 st.markdown(
-                    f'<p class="spps-chart-caption"><strong>Blue</strong> bars are groups with '
+                    f'<p class="spps-chart-caption"><strong>Forest</strong> bars are groups with '
                     f'n ≥ {min_size} (statistically reliable); <strong>gray</strong> bars are smaller '
                     f'groups. {caveat} The 0% bars — the groups dragging the parity ratio to '
                     f'{dp_ratio_s} — are the smallest of all (e.g. venzuela n=1), so this reads as '
@@ -578,7 +577,7 @@ else:
             fig.update_layout(
                 **PLOTLY_BASE, height=260, showlegend=False, margin=dict(t=10, b=40, l=8, r=8),
                 yaxis=dict(title="Selection rate (%)", range=[0, max(v*100 for _, v in items) * 1.3],
-                           showgrid=True, gridcolor="#EBEBEA"),
+                           showgrid=True, gridcolor="#E7E0D1"),
             )
             st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
             st.markdown(

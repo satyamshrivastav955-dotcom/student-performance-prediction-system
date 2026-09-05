@@ -31,7 +31,7 @@ from theme import (
 )
 
 st.set_page_config(
-    page_title="Simulate the Whole Class", page_icon="🏫", layout="wide",
+    page_title="Cohort Simulator — Policy Hall", page_icon=None, layout="wide",
     initial_sidebar_state="collapsed",
 )
 inject_theme(active_page="cohort")
@@ -39,17 +39,16 @@ inject_theme(active_page="cohort")
 cfg = load_config()
 
 if not model_is_available():
-    st.error("⚠️ No trained model found. Run `python scripts/run_pipeline.py` first.")
+    st.error("No trained model found. Run `python scripts/run_pipeline.py` first.")
     st.stop()
 
 # ---------------------------------------------------------------------------
 # Page hero
 # ---------------------------------------------------------------------------
 st.markdown(page_hero(
-    "Simulate the Whole Class",
-    "Model what happens to the entire class if you implement an intervention. "
-    "Monte Carlo simulation runs hundreds of trials with realistic variation "
-    "to give you confidence intervals, not just single numbers."
+    "The Policy Hall",
+    "Test an intervention on the entire cohort before committing a single coin. "
+    "Monte Carlo simulation with honest 95% confidence intervals."
 ), unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
@@ -166,14 +165,14 @@ if st.button("Run Simulation", type="primary", use_container_width=True):
             b_cnt  = baseline["counts"][cls]
             s_cnt  = simulated["mean_counts"][cls]
             direction = "↑" if d_pct > 0 else ("↓" if d_pct < 0 else "→")
-            color_map_cls = {"H": ACCENT, "M": "#8C8C8C", "L": CHART_DARK}
+            color_map_cls = {"H": ACCENT, "M": "#9A7B2E", "L": CHART_DARK}
             dot_color = color_map_cls[cls]
 
             # Positive for H means good, positive for L means bad
             if (cls == "H" and d_pct > 0) or (cls == "L" and d_pct < 0):
                 delta_style = f"color:{ACCENT};"
             elif (cls == "H" and d_pct < 0) or (cls == "L" and d_pct > 0):
-                delta_style = "color:#3D3D3D;"
+                delta_style = "color:#7C2D12;"
             else:
                 delta_style = "color:var(--ink-muted);"
 
@@ -255,15 +254,14 @@ if st.button("Run Simulation", type="primary", use_container_width=True):
         yaxis=dict(
             title="% of students",
             range=[0, min(100, max_val * 1.35)],
-            showgrid=True, gridcolor="#EBEBEA",
+            showgrid=True, gridcolor="#E7E0D1",
         ),
     )
     st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
-        '<p class="spps-chart-caption">Gray bars = current class distribution. '
-        'Colored bars = simulated distribution after the intervention. '
-        'Error bars show the 95% confidence interval from the Monte Carlo '
-        'simulation — wider bars mean more uncertainty about the exact outcome.</p>',
+        '<p class="spps-chart-caption">Stone bars = present distribution. '
+        'Forest, brass and clay bars = simulated future. '
+        'Error bars show the 95% confidence interval — wider bars mean more uncertainty.</p>',
         unsafe_allow_html=True,
     )
 

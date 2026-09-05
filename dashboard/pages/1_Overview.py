@@ -31,7 +31,7 @@ from theme import (
     INK, INK_SEC, INK_MUTED, BORDER, SURFACE,
 )
 
-st.set_page_config(page_title="Overview", page_icon="📊", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Overview — Cohort Ledger", page_icon=None, layout="wide", initial_sidebar_state="collapsed")
 inject_theme(active_page="overview")
 
 cfg = load_config()
@@ -93,10 +93,10 @@ n_medium = class_counts.get("M", 0)
 n_low = class_counts.get("L", 0)
 
 st.markdown(kpi_hero_row([
-    {"icon": "🎓", "value": str(n_students), "label": "Total Students", "trend": "xAPI-Edu-Data"},
-    {"icon": "🌟", "value": str(n_high), "label": "High Performers", "blue": True, "trend": f"{n_high/n_students:.1%} of total"},
-    {"icon": "📈", "value": str(n_medium), "label": "Medium Performers", "trend": f"{n_medium/n_students:.1%} of total"},
-    {"icon": "⚠️", "value": str(n_low), "label": "Low Performers", "trend": f"{n_low/n_students:.1%} of total"},
+    {"icon": "cap", "value": str(n_students), "label": "Total Students", "trend": "xAPI-Edu-Data"},
+    {"icon": "seal", "value": str(n_high), "label": "High Performers", "blue": True, "trend": f"{n_high/n_students:.1%} of total"},
+    {"icon": "ledger", "value": str(n_medium), "label": "Medium Performers", "trend": f"{n_medium/n_students:.1%} of total"},
+    {"icon": "book", "value": str(n_low), "label": "Low Performers", "trend": f"{n_low/n_students:.1%} of total"},
 ]), unsafe_allow_html=True)
 
 st.divider()
@@ -125,7 +125,7 @@ with col_chart:
     fig.update_layout(
         **PLOTLY_BASE,
         showlegend=False,
-        yaxis=dict(showgrid=True, gridcolor="#EBEBEA", gridwidth=1,
+        yaxis=dict(showgrid=True, gridcolor="#E7E0D1", gridwidth=1,
                    tickfont=dict(size=12), linecolor="rgba(0,0,0,0)"),
         height=320,
     )
@@ -209,7 +209,7 @@ if model_is_available():
 
         def _flag_low(row):
             if row["Predicted"] == class_label("L", cfg):
-                return ["background-color: rgba(31,41,55,0.06)"] * len(row)
+                return ["background-color: rgba(124,45,18,0.07)"] * len(row)
             return [""] * len(row)
 
         try:
@@ -230,7 +230,7 @@ if model_is_available():
                        "P(Low)%", "P(Med)%", "P(High)%", "Confidence%"]
         csv = risk_view[export_cols].to_csv(index=False).encode("utf-8")
         st.download_button(
-            "⬇ Download full risk-ranked list (CSV)",
+            "Download full risk-ranked list (CSV)",
             data=csv, file_name="student_risk_ranking.csv", mime="text/csv",
         )
     except Exception as e:
@@ -261,7 +261,7 @@ fig.update_layout(
     **PLOTLY_BASE,
     barmode="group",
     height=340,
-    yaxis=dict(title="Average score", showgrid=True, gridcolor="#EBEBEA",
+    yaxis=dict(title="Average score", showgrid=True, gridcolor="#E7E0D1",
                tickfont=dict(size=12), linecolor="rgba(0,0,0,0)"),
 )
 st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
@@ -301,10 +301,10 @@ with col_abs1:
         barmode="stack",
         height=300,
         title=dict(text="Absence level vs performance", font=dict(
-            family="Space Grotesk, sans-serif", size=13, color=INK_SEC
+            family="Cormorant Garamond, Georgia, serif", size=13, color=INK_SEC
         )),
         xaxis=dict(title="Absence level", showgrid=False),
-        yaxis=dict(title="% of students", showgrid=True, gridcolor="#EBEBEA"),
+        yaxis=dict(title="% of students", showgrid=True, gridcolor="#E7E0D1"),
     )
     st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
@@ -333,10 +333,10 @@ with col_abs2:
         barmode="stack",
         height=300,
         title=dict(text="Parent survey participation vs performance", font=dict(
-            family="Space Grotesk, sans-serif", size=13, color=INK_SEC
+            family="Cormorant Garamond, Georgia, serif", size=13, color=INK_SEC
         )),
         xaxis=dict(title="Parent answered survey", showgrid=False),
-        yaxis=dict(title="% of students", showgrid=True, gridcolor="#EBEBEA"),
+        yaxis=dict(title="% of students", showgrid=True, gridcolor="#E7E0D1"),
     )
     st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
     st.markdown(
@@ -373,7 +373,7 @@ fig.update_layout(
     barmode="stack",
     height=max(420, len(topic_pct) * 35),
     margin=dict(t=24, b=40, l=130, r=8),
-    xaxis=dict(title="% of students", showgrid=True, gridcolor="#EBEBEA"),
+    xaxis=dict(title="% of students", showgrid=True, gridcolor="#E7E0D1"),
     yaxis=dict(showgrid=False, tickfont=dict(size=11)),
 )
 st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
@@ -409,7 +409,7 @@ if model_is_available():
         )
         try:
             lb_styled = lb_display.style.background_gradient(
-                subset=["At-Risk %"], cmap="Blues"
+                subset=["At-Risk %"], cmap="YlOrBr"
             ).format({"At-Risk %": "{:.1f}", "Avg P(Low)%": "{:.1f}"})
             st.dataframe(lb_styled, use_container_width=True, hide_index=True)
         except Exception:
@@ -423,7 +423,7 @@ if model_is_available():
             unsafe_allow_html=True,
         )
         st.download_button(
-            "⬇ Download subject leaderboard (CSV)",
+            "Download subject leaderboard (CSV)",
             data=lb_display.to_csv(index=False).encode("utf-8"),
             file_name="subject_leaderboard.csv", mime="text/csv",
         )
@@ -443,8 +443,8 @@ with st.expander("Advanced: Correlation Matrix"):
         x=[friendly(f, cfg) for f in numeric_features],
         y=[friendly(f, cfg) for f in numeric_features],
         color_continuous_scale=[
-            [0.0, "#3D3D3D"],
-            [0.5, "#F7F7F5"],
+            [0.0, "#7C2D12"],
+            [0.5, "#FAF8F3"],
             [1.0, ACCENT],
         ],
         zmin=-1, zmax=1,

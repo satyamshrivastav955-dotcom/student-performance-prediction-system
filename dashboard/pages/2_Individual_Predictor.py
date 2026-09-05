@@ -33,7 +33,7 @@ from theme import (
 )
 
 st.set_page_config(
-    page_title="Predict for a Student", page_icon="🎯", layout="wide",
+    page_title="Individual Predictor — Faculty Dossier", page_icon=None, layout="wide",
     initial_sidebar_state="collapsed",
 )
 inject_theme(active_page="predictor")
@@ -44,16 +44,16 @@ cfg = load_config()
 # Check model
 # ---------------------------------------------------------------------------
 if not model_is_available():
-    st.error("⚠️ No trained model found. Run `python scripts/run_pipeline.py` first.")
+    st.error("No trained model found. Run `python scripts/run_pipeline.py` first.")
     st.stop()
 
 # ---------------------------------------------------------------------------
 # Page hero
 # ---------------------------------------------------------------------------
 st.markdown(page_hero(
-    "Predict for a Student",
-    "Enter a student's data or pick an existing student to see their predicted "
-    "performance band, understand the reasoning behind it, and get personalised advice."
+    "The Individual Dossier",
+    "Enter a student's record or open an existing file — receive the verdict, "
+    "the reasoning in plain counsel, and the path forward."
 ), unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
@@ -261,15 +261,15 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
                         height=max(300, len(labels) * 42),
                         margin=dict(t=20, b=40, l=170, r=80),
                         xaxis=dict(title=f"Contribution to P({predicted_label})",
-                                   showgrid=True, gridcolor="#EBEBEA",
-                                   zeroline=True, zerolinecolor="#C8C8C6", zerolinewidth=1.5),
+                                   showgrid=True, gridcolor="#E7E0D1",
+                                   zeroline=True, zerolinecolor="#C9BFA9", zerolinewidth=1.5),
                         yaxis=dict(showgrid=False, tickfont=dict(size=12)),
                     )
                     st.plotly_chart(figw, use_container_width=True, config=PLOTLY_CONFIG)
                     st.markdown(
                         '<p class="spps-chart-caption">A SHAP waterfall: starting from the average '
                         'prediction (base rate), each factor pushes the probability of the '
-                        f'<strong>{predicted_label}</strong> band up (blue) or down (dark) until it '
+                        f'<strong>{predicted_label}</strong> band up (forest) or down (clay) until it '
                         'reaches this student\'s final score.</p>',
                         unsafe_allow_html=True,
                     )
@@ -290,15 +290,15 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
                 ))
                 figb.update_layout(
                     **PLOTLY_BASE, margin=dict(t=20, b=40, l=160, r=60),
-                    xaxis=dict(title="Impact on prediction", showgrid=True, gridcolor="#EBEBEA",
-                               zeroline=True, zerolinecolor="#C8C8C6", zerolinewidth=1.5),
+                    xaxis=dict(title="Impact on prediction", showgrid=True, gridcolor="#E7E0D1",
+                               zeroline=True, zerolinecolor="#C9BFA9", zerolinewidth=1.5),
                     yaxis=dict(showgrid=False, tickfont=dict(size=12)),
                     height=max(260, len(top) * 42),
                 )
                 st.plotly_chart(figb, use_container_width=True, config=PLOTLY_CONFIG)
                 st.markdown(
-                    '<p class="spps-chart-caption">Blue pushes the prediction toward a higher '
-                    'band; dark bars pull it lower. The longer the bar, the stronger that '
+                    '<p class="spps-chart-caption">Forest pushes the prediction toward a higher '
+                    'band; clay bars pull it lower. The longer the bar, the stronger that '
                     'factor\'s influence.</p>',
                     unsafe_allow_html=True,
                 )
@@ -343,7 +343,7 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
                     **PLOTLY_BASE, height=400, margin=dict(t=30, b=40, l=40, r=40),
                     polar=dict(
                         radialaxis=dict(range=[0, 100], showline=False,
-                                        gridcolor="#EBEBEA", tickfont=dict(size=10)),
+                                        gridcolor="#E7E0D1", tickfont=dict(size=10)),
                         angularaxis=dict(tickfont=dict(size=11)),
                         bgcolor="rgba(0,0,0,0)",
                     ),
@@ -351,7 +351,7 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
                 st.plotly_chart(figr, use_container_width=True, config=PLOTLY_CONFIG)
                 st.markdown(
                     '<p class="spps-chart-caption">Where this student\'s engagement sits relative '
-                    'to the typical High-band and Low-band student. The closer the blue shape hugs '
+                    'to the typical High-band and Low-band student. The closer the forest shape hugs '
                     'the High outline, the stronger the engagement profile.</p>',
                     unsafe_allow_html=True,
                 )
@@ -383,7 +383,7 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
         elif predicted_class == "H":
             st.markdown(
                 suggestion_card(
-                    "🌟 This student is predicted as High-performing. Keep up the current approach!"
+                    "This student is predicted as High-performing. Hold the course — consistency is the counsel."
                 ),
                 unsafe_allow_html=True,
             )
@@ -410,7 +410,7 @@ if st.button("Run Prediction", type="primary", use_container_width=True):
                     action = summary.split(".")[0] if "." in summary else summary
                     detail = ". ".join(summary.split(".")[1:]).strip() if "." in summary else ""
                     st.markdown(
-                        cf_card("→", action, detail),
+                        cf_card("arrow", action, detail),
                         unsafe_allow_html=True,
                     )
 
@@ -511,7 +511,7 @@ if st.button("Compare", key="cmp_btn", use_container_width=True):
         figc.update_layout(
             **PLOTLY_BASE, barmode="group", height=320, margin=dict(t=20, b=40, l=8, r=8),
             yaxis=dict(title="Engagement score", range=[0, 100],
-                       showgrid=True, gridcolor="#EBEBEA"),
+                       showgrid=True, gridcolor="#E7E0D1"),
         )
         st.plotly_chart(figc, use_container_width=True, config=PLOTLY_CONFIG)
         st.markdown(

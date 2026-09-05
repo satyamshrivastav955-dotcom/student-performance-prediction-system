@@ -32,7 +32,7 @@ from theme import (
 )
 
 st.set_page_config(
-    page_title="Try What-If Scenarios", page_icon="🔮", layout="wide",
+    page_title="What-If Simulator — Counsel Room", page_icon=None, layout="wide",
     initial_sidebar_state="collapsed",
 )
 inject_theme(active_page="whatif")
@@ -40,16 +40,16 @@ inject_theme(active_page="whatif")
 cfg = load_config()
 
 if not model_is_available():
-    st.error("⚠️ No trained model found. Run `python scripts/run_pipeline.py` first.")
+    st.error("No trained model found. Run `python scripts/run_pipeline.py` first.")
     st.stop()
 
 # ---------------------------------------------------------------------------
 # Page hero
 # ---------------------------------------------------------------------------
 st.markdown(page_hero(
-    "What-If Simulator",
-    "Adjust a student's engagement metrics and see how the predicted performance "
-    "changes in real time. Understand which changes matter most."
+    "The Counsel Room",
+    "Move the levers of habit and watch the verdict move. Every change is live, "
+    "every counsel is actionable — demographics never move."
 ), unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
@@ -253,12 +253,12 @@ with col_result:
             barmode="group",
             height=260,
             yaxis=dict(title="Probability (%)", range=[0, 110],
-                       showgrid=True, gridcolor="#EBEBEA"),
+                       showgrid=True, gridcolor="#E7E0D1"),
         )
         st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
         st.markdown(
-            '<p class="spps-chart-caption">Gray bars = original prediction. '
-            'Dark/blue bars = what-if scenario.</p>',
+            '<p class="spps-chart-caption">Stone bars = original verdict. '
+            'Forest and brass bars = counsel-room scenario.</p>',
             unsafe_allow_html=True,
         )
 
