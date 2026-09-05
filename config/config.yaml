@@ -293,18 +293,17 @@ dashboard:
   page_icon: "📘"
   layout: "wide"
   theme:
-    background: "#FFFFFF"
-    surface: "#FAFAFA"
-    accent: "#2563EB"
-    text: "#1F2937"
-    muted: "#6B7280"
-    border: "#E5E7EB"
-    # Soft, desaturated status colours — this is a student's academic standing,
-    # not an error state, so no alarm-red anywhere.
+    background: "#FAF8F3"
+    surface: "#FFFFFF"
+    accent: "#234434"
+    text: "#1C1917"
+    muted: "#78716C"
+    border: "#E7E0D1"
+    # Muted academic bands — High forest, Medium brass, Low clay. No alarm red.
     class_colors:
-      H: "#10B981"
-      M: "#F59E0B"
-      L: "#F87171"
+      H: "#234434"
+      M: "#9A7B2E"
+      L: "#7C2D12"
   show_advanced_by_default: false
 
 api:
