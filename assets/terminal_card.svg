@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="100%" height="100%" style="background:#090d16; border-radius:14px; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;">
+  <defs>
+    <!-- Window Shadows & Background -->
+    <filter id="terminal-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+    <linearGradient id="header-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="body-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#050811" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .t-text { font-size: 12.5px; fill: #e2e8f0; font-family: 'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace; }
+    .t-dim { fill: #64748b; }
+    .t-cyan { fill: #38bdf8; font-weight: 600; }
+    .t-green { fill: #10b981; font-weight: 600; }
+    .t-purple { fill: #c084fc; font-weight: 600; }
+    .t-yellow { fill: #f59e0b; font-weight: 600; }
+    .t-red { fill: #f43f5e; font-weight: 600; }
+    .t-bold { font-weight: 700; }
+    
+    /* Blinking Cursor */
+    .cursor {
+      animation: blink 1s step-end infinite;
+      fill: #38bdf8;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Pulse Status Beacon */
+    .beacon {
+      animation: beacon-pulse 2s ease-in-out infinite;
+    }
+    @keyframes beacon-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+    }
+  </style>
+
+  <!-- Main Window Frame -->
+  <g filter="url(#terminal-shadow)">
+    <!-- Terminal Background -->
+    <rect x="20" y="20" width="960" height="580" rx="12" fill="url(#body-grad)" stroke="#1e293b" stroke-width="1.5" />
+
+    <!-- Terminal Titlebar -->
+    <rect x="20" y="20" width="960" height="42" rx="12" fill="url(#header-grad)" stroke="#334155" stroke-width="1" />
+    <!-- Mask to keep bottom square -->
+    <rect x="20" y="50" width="960" height="12" fill="url(#header-grad)" />
+
+    <!-- Window Controls (macOS / Modern style) -->
+    <circle cx="44" cy="41" r="6.5" fill="#ef4444" />
+    <circle cx="64" cy="41" r="6.5" fill="#f59e0b" />
+    <circle cx="84" cy="41" r="6.5" fill="#10b981" />
+
+    <!-- Window Title -->
+    <text x="500" y="46" font-size="12" font-weight="600" fill="#94a3b8" text-anchor="middle">satyam@ml-engine: ~/student-performance-prediction (main)</text>
+
+    <!-- Top Status Badge -->
+    <rect x="800" y="30" width="165" height="22" rx="6" fill="#062d22" stroke="#059669" stroke-width="1" />
+    <circle cx="814" cy="41" r="4" fill="#10b981" class="beacon" />
+    <text x="825" y="45" font-size="10" font-weight="700" fill="#34d399">43 / 43 TESTS PASSING</text>
+  </g>
+
+  <!-- Terminal Output Lines -->
+  <g transform="translate(45, 85)">
+    <!-- Line 1: Command Invocation -->
+    <text x="0" y="15" class="t-text">
+      <tspan class="t-green t-bold">➜ </tspan>
+      <tspan class="t-cyan t-bold">student-performance-prediction</tspan>
+      <tspan class="t-dim"> git:(</tspan><tspan class="t-yellow">main</tspan><tspan class="t-dim">) </tspan>
+      <tspan class="t-bold">python scripts/run_pipeline.py --all</tspan>
+    </text>
+
+    <!-- Line 2: Pipeline Initialization Banner -->
+    <text x="0" y="38" class="t-text t-dim">───────────────────────────────────────────────────────────────────────────────────────────</text>
+    <text x="0" y="55" class="t-text">
+      <tspan class="t-purple t-bold">[PIPELINE] </tspan>
+      <tspan fill="#f1f5f9">Initializing Student Performance Intelligence System </tspan>
+      <tspan class="t-dim">(Seed=42, Folds=5, Metric=Macro-F1)</tspan>
+    </text>
+
+    <!-- Line 3: Data Ingestion -->
+    <text x="0" y="80" class="t-text">
+      <tspan class="t-cyan t-bold">[01/08 · DATA] </tspan>
+      <tspan>Loaded raw xAPI-Edu-Data: </tspan>
+      <tspan class="t-green">478 samples</tspan>
+      <tspan> · 16 features · </tspan>
+      <tspan class="t-green">0 duplicates · 0 missing values</tspan>
+    </text>
+
+    <!-- Line 4: Statistical Testing & Effect Sizes -->
+    <text x="0" y="105" class="t-text">
+      <tspan class="t-cyan t-bold">[02/08 · STATS] </tspan>
+      <tspan>Hypothesis testing: AbsenceDays (Cramer's V = </tspan>
+      <tspan class="t-yellow t-bold">0.680</tspan>
+      <tspan>, p=2.4e-61) · VisITedResources (η² = </tspan>
+      <tspan class="t-yellow t-bold">0.488</tspan>
+      <tspan>)</tspan>
+    </text>
+
+    <!-- Line 5: Preprocessing Pipeline -->
+    <text x="0" y="130" class="t-text">
+      <tspan class="t-cyan t-bold">[03/08 · PREP]  </tspan>
+      <tspan>Built ColumnTransformer: RobustScaler(4 num) + OneHot(10 cat) + Ordinal(3 ord)</tspan>
+    </text>
+
+    <!-- Line 6-10: Classical Model Arena Table -->
+    <text x="0" y="160" class="t-text">
+      <tspan class="t-purple t-bold">[04/08 · ARENA] </tspan>
+      <tspan fill="#cbd5e1">Benchmarking 4 Classical Models across 5-Fold Stratified Cross-Validation:</tspan>
+    </text>
+
+    <text x="16" y="185" class="t-text t-dim">  MODEL                      ACCURACY       MACRO-F1       KAPPA        SEVERE ERRORS   STATUS</text>
+    <text x="16" y="205" class="t-text">
+      <tspan>  Logistic Regression        73.96%         0.7477         0.6027       0 (0.0%)        Baseline</tspan>
+    </text>
+    <text x="16" y="225" class="t-text">
+      <tspan>  Decision Tree (Pruned)     69.79%         0.7086         0.5411       0 (0.0%)        Evaluated</tspan>
+    </text>
+    <text x="16" y="245" class="t-text">
+      <tspan>  Gradient Boosting          70.83%         0.7172         0.5487       0 (0.0%)        Evaluated</tspan>
+    </text>
+    <text x="16" y="265" class="t-text">
+      <tspan class="t-green t-bold">✔ Random Forest Classifier   82.29%         0.8282         0.7285       0 (0.0%)        ★ CHAMPION</tspan>
+    </text>
+
+    <!-- Line 11: Statistical Significance Callout -->
+    <text x="0" y="295" class="t-text">
+      <tspan class="t-cyan t-bold">[05/08 · EVAL]  </tspan>
+      <tspan>McNemar's paired test vs Decision Tree: </tspan>
+      <tspan class="t-green t-bold">p = 0.0143 (statistically significant)</tspan>
+      <tspan> · CI: [0.75, 0.89]</tspan>
+    </text>
+
+    <!-- Line 12: TreeSHAP Attribution -->
+    <text x="0" y="320" class="t-text">
+      <tspan class="t-yellow t-bold">[06/08 · SHAP]  </tspan>
+      <tspan>TreeExplainer global attributions: Absence (</tspan>
+      <tspan class="t-yellow">28.5%</tspan>
+      <tspan>), Resources (</tspan>
+      <tspan class="t-yellow">20.2%</tspan>
+      <tspan>), RaisedHands (</tspan>
+      <tspan class="t-yellow">11.9%</tspan>
+      <tspan>)</tspan>
+    </text>
+
+    <!-- Line 13: DiCE Counterfactual Engine -->
+    <text x="0" y="345" class="t-text">
+      <tspan class="t-yellow t-bold">[07/08 · DiCE]  </tspan>
+      <tspan>Generated actionable recourse: </tspan>
+      <tspan class="t-green t-bold">5/5 students with feasible route</tspan>
+      <tspan> · </tspan>
+      <tspan class="t-purple">Gender/Nationality FROZEN</tspan>
+    </text>
+
+    <!-- Line 14: Fairlearn Disparity Audit -->
+    <text x="0" y="370" class="t-text">
+      <tspan class="t-green t-bold">[08/08 · AUDIT] </tspan>
+      <tspan>Fairlearn Demographic Parity ratio: </tspan>
+      <tspan class="t-green t-bold">0.982</tspan>
+      <tspan> (Gender), </tspan>
+      <tspan class="t-green t-bold">Parity Diff: 0.008 &lt; 0.05</tspan>
+      <tspan class="t-dim"> [PASSED]</tspan>
+    </text>
+
+    <!-- Line 15: Dual-Channel Serving Status -->
+    <text x="0" y="405" class="t-text t-dim">───────────────────────────────────────────────────────────────────────────────────────────</text>
+    <text x="0" y="425" class="t-text">
+      <tspan class="t-green t-bold">✔ READY </tspan>
+      <tspan fill="#f1f5f9">FastAPI REST microservice mounted on </tspan>
+      <tspan class="t-cyan">http://localhost:8000</tspan>
+      <tspan class="t-dim"> (Inference latency: ~8.4ms)</tspan>
+    </text>
+    <text x="0" y="445" class="t-text">
+      <tspan class="t-green t-bold">✔ READY </tspan>
+      <tspan fill="#f1f5f9">Streamlit interactive dashboard live on </tspan>
+      <tspan class="t-cyan">http://localhost:8501</tspan>
+      <tspan class="t-dim"> (5 analytical tabs)</tspan>
+    </text>
+
+    <!-- Line 16: Next command prompt with blinking cursor -->
+    <text x="0" y="480" class="t-text">
+      <tspan class="t-green t-bold">➜ </tspan>
+      <tspan class="t-cyan t-bold">student-performance-prediction</tspan>
+      <tspan class="t-dim"> git:(</tspan><tspan class="t-yellow">main</tspan><tspan class="t-dim">) </tspan>
+      <tspan class="cursor">█</tspan>
+    </text>
+  </g>
+</svg>
