@@ -11,7 +11,7 @@
 [![SHAP & DiCE](https://img.shields.io/badge/XAI-TreeSHAP%20%2B%20DiCE-8b5cf6?style=flat-square)](https://github.com/shap/shap)
 [![Fairlearn](https://img.shields.io/badge/ethics-Fairlearn%20Audited-06b6d4?style=flat-square)](https://fairlearn.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B%20(Sub--10ms)-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![Streamlit UI](https://img.shields.io/badge/Streamlit-1.42%2B%20(5%20Pages)-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Streamlit UI](https://img.shields.io/badge/Streamlit-1.42%2B%20(7%20Pages)-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 <br/>
@@ -39,7 +39,7 @@ This system solves both problems by coupling a **statistically verified classica
 2. **Actionable Recourse (DiCE Counterfactuals)**: Calculates the minimal viable behavioral adjustment needed to reach a higher academic band (e.g., *"Increasing resource visits from 40 to 79 shifts predicted band from Low to Medium"*). **Protected attributes (Gender, Nationality) are mathematically frozen**—the engine will never suggest altering demographics to change an academic outcome.
 3. **Algorithmic Fairness Audit (Fairlearn)**: Measures Demographic Parity (0.982 ratio across gender) and Equalized Odds across demographic cohorts.
 4. **Cohort Intervention Simulator**: Runs 500-iteration Monte Carlo stochastic simulations to test institutional policies before implementation (e.g., boosting class engagement by 15% yields a +7.7 percentage-point increase in High-performing students).
-5. **Dual Production Serving**: Served simultaneously via a **sub-10ms FastAPI REST microservice** (Pydantic v2 schemas) and an interactive **5-page Streamlit analytical dashboard** with verified 100% inference parity.
+5. **Dual Production Serving**: Served simultaneously via a **sub-10ms FastAPI REST microservice** (Pydantic v2 schemas) and an interactive **7-page Streamlit analytical dashboard** with verified 100% inference parity, responsive design, and UI state management.
 
 ---
 
@@ -90,9 +90,19 @@ The system is engineered across five decoupled, leak-free layers:
 
 ## 🖼️ Production Interface Gallery
 
-### 1. Interactive Streamlit Dashboard & Predictor
+### 1. Interactive 7-Page Streamlit Intelligence Hub
 
-The Streamlit UI provides educators and institutional researchers with four dedicated operational views:
+The Streamlit UI delivers an institutional-grade, multi-page operational suite engineered with a modern design system, responsive mobile layouts, standardized UI states (loading, empty, error, success), and dark-mode tokens:
+
+| Operational Page | File | Primary Functionality & Features |
+|---|---|---|
+| **Overview** | [`1_Overview.py`](dashboard/pages/1_Overview.py) | **Cohort Triage & Health Monitoring**: Executive KPI cards, risk band distribution, filterable at-risk triage table with quick navigation to individual recourse. |
+| **Student Check-in** | [`2_Individual_Predictor.py`](dashboard/pages/2_Individual_Predictor.py) | **Real-Time Individual Predictor**: Probability gauges, side-by-side baseline comparison against cohort averages, UI error states, and coaching recommendations. |
+| **Explore Improvements** | [`3_What_If_Simulator.py`](dashboard/pages/3_What_If_Simulator.py) | **Actionable Recourse Explorer**: DiCE counterfactuals with frozen demographics, sensitivity analysis, feasibility scoring, and customized action plan export. |
+| **Class Insights** | [`4_Cohort_Simulator.py`](dashboard/pages/4_Cohort_Simulator.py) | **Monte Carlo Policy Simulator**: 500-iteration stochastic simulations modeling intervention policies with empirical covariance and 95% confidence intervals. |
+| **Model & Fairness** | [`5_Model_and_Fairness.py`](dashboard/pages/5_Model_and_Fairness.py) | **5-Tab Progressive Model Audit**: McNemar statistical significance test card, holdout error matrices, bootstrap CIs, Fairlearn demographic parity report, and Model Card. |
+| **Cohort Analytics** | [`6_Analytics.py`](dashboard/pages/6_Analytics.py) | **Deep-Dive Telemetry**: 6 interactive charts (Demographics, Behavioral Heatmaps, Attendance Disparities, Variance Radars, Sankey Flows, Boxplot Distributions). |
+| **About Project** | [`7_About.py`](dashboard/pages/7_About.py) | **Mission & System Architecture**: Methodology walkthrough, ethical AI governance principles, and comprehensive technology stack matrix. |
 
 <table align="center" width="100%">
   <tr>
@@ -101,14 +111,14 @@ The Streamlit UI provides educators and institutional researchers with four dedi
       <br/>
       <strong>Executive Overview & KPI Dashboard</strong>
       <br/>
-      <em>Real-time KPI telemetry: 82.3% Accuracy, 0.828 Macro-F1, 12 statistically significant features, and class distributions.</em>
+      <em>Real-time KPI telemetry: 82.3% Accuracy, 0.828 Macro-F1, 12 statistically significant features, and cohort triage filters.</em>
     </td>
     <td width="50%" align="center">
       <img src="assets/screenshots/individual_predictor.png" alt="Individual Student Predictor" width="100%" style="border-radius:8px; border:1px solid #334155;" />
       <br/>
-      <strong>Individual Student Predictor & Risk Gauge</strong>
+      <strong>Student Check-in & Risk Gauge</strong>
       <br/>
-      <em>Interactive sliders for real-time inference with multiclass probability distribution (Low, Medium, High).</em>
+      <em>Interactive telemetry controls with calibrated probability gauges, cohort comparison, and tailored intervention playbooks.</em>
     </td>
   </tr>
 </table>
@@ -423,14 +433,16 @@ student-performance-prediction/
 │   ├── recommendations/               # Personalized academic coaching guidance generator
 │   └── reporting/                     # Automated reporting and presentation generation
 ├── dashboard/
-│   ├── app.py                         # Streamlit landing page & KPI navigation
-│   ├── theme.py                       # Modern dark-mode visual design tokens
+│   ├── app.py                         # Unified Streamlit entrypoint & multi-page navigation hub
+│   ├── theme.py                       # Modern design tokens, UI states, Plotly theme & responsive CSS
 │   └── pages/
-│       ├── 1_Overview.py              # Cohort exploratory analysis & distribution plots
-│       ├── 2_Individual_Predictor.py  # Real-time inference & local SHAP waterfall
-│       ├── 3_What_If_Simulator.py     # DiCE counterfactual recourse explorer
-│       ├── 4_Cohort_Simulator.py      # Monte Carlo institutional policy simulator
-│       └── 5_Model_and_Fairness.py    # Model arena diagnostics & algorithmic bias audit
+│       ├── 1_Overview.py              # Cohort triage view, risk segmentation & quick navigation
+│       ├── 2_Individual_Predictor.py  # Real-time inference, risk gauge, UI states & cohort comparison
+│       ├── 3_What_If_Simulator.py     # DiCE counterfactual recourse, sensitivity & action planning
+│       ├── 4_Cohort_Simulator.py      # Monte Carlo policy simulation with 95% confidence intervals
+│       ├── 5_Model_and_Fairness.py    # 5-tab progressive model audit, McNemar test & Fairlearn bias report
+│       ├── 6_Analytics.py             # Advanced cohort analytics with 6 deep-dive charts & telemetry
+│       └── 7_About.py                 # System architecture, ethical guidelines & tech stack matrix
 ├── api/
 │   ├── main.py                        # FastAPI application entry point
 │   ├── schemas.py                     # Strict Pydantic v2 request/response models
