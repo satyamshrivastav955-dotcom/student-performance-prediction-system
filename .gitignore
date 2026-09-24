@@ -38,6 +38,7 @@ secrets.yaml
 # --- IDE / OS -----------------------------------------------------------------
 .vscode/
 .idea/
+.github/
 *.swp
 .DS_Store
 Thumbs.db

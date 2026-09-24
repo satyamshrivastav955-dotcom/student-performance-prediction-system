@@ -24,23 +24,15 @@
     .t-red { fill: #f43f5e; font-weight: 600; }
     .t-bold { font-weight: 700; }
     
-    /* Blinking Cursor */
+    /* Static Terminal Cursor */
     .cursor {
-      animation: blink 1s step-end infinite;
       fill: #38bdf8;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      opacity: 1;
     }
 
-    /* Pulse Status Beacon */
+    /* Static Status Beacon */
     .beacon {
-      animation: beacon-pulse 2s ease-in-out infinite;
-    }
-    @keyframes beacon-pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.1); }
+      opacity: 1;
     }
   </style>
 
